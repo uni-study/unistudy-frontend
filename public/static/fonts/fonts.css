@@ -1,0 +1,20 @@
+@font-face {
+    font-family: "GmarketSansBold";
+    src: url("GmarketSansOTF/GmarketSansBold.otf") format("opentype");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "GmarketSansLight";
+    src: url("GmarketSansOTF/GmarketSansLight.otf") format("opentype");
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "GmarketSansMedium";
+    src: url("GmarketSansOTF/GmarketSansMedium.otf") format("opentype");
+    font-weight: 200;
+    font-style: normal;
+}
