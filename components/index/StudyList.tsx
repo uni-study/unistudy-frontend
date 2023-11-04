@@ -1,6 +1,7 @@
 import { STUDYGROUPS_TYPE } from "@/types/data";
-import STUDYGROUP_DUMMY_DATA from "@/STUDYGROUP_DUMMY_DATA.json";
+import STUDYGROUP_DUMMY_DATA from "@/DATA/STUDYGROUP_DUMMY_DATA.json";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 const Outer = styled.div`
     display: flex;
@@ -93,12 +94,20 @@ const StudyGroup: STUDYGROUPS_TYPE = {
 };
 
 export function StudyList() {
+    const router = useRouter();
+    const moveToDetailPost = (pid: number) => {
+        router.push(`/detailPost/${pid}`);
+        console.log("이동");
+    };
     return (
         <>
             <Outer>
                 {StudyGroup.studyGroupData.map((e, i) => {
                     return (
-                        <ContentBox key={i}>
+                        <ContentBox
+                            key={i}
+                            onClick={() => moveToDetailPost(e.id)}
+                        >
                             <FirstLine>
                                 <Date>{e.recruitmentDeadline}</Date>
                                 <CurrentState>{e.currentState}</CurrentState>

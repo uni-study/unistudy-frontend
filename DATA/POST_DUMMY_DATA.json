@@ -1,0 +1,42 @@
+[
+    {
+        "id": 0,
+        "writer": "User01",
+        "studyGroupId": 1,
+        "title": "Recruiting Developers who want to make an website for UNIST",
+        "mainText": "Hello, I am UNIST CSE Students.\nI am planning to make an webstie for UNIST students.\nIt's about Study Groups. \n\n I need People who can \n do Frontend \n do Backend \n do Design",
+        "postedAt": "2023-11-01",
+        "updatedAt": "2023-11-02",
+        "expiredAt": "2023-12-31"
+    },
+    {
+        "id": 1,
+        "writer": "User02",
+        "studyGroupId": 2,
+        "title": "Recruiting Developers who want to make an website for UNIST",
+        "mainText": "Hello, I am UNIST CSE Students.\nI am planning to make an webstie for UNIST students.\nIt's about Study Groups. \n\n I need People who can \n do Frontend \n do Backend \n do Design",
+        "postedAt": "2023-11-01",
+        "updatedAt": "2023-11-02",
+        "expiredAt": "2023-12-31"
+    },
+    {
+        "id": 2,
+        "writer": "User03",
+        "studyGroupId": 3,
+        "title": "Recruiting Developers who want to make an website for UNIST",
+        "mainText": "Hello, I am UNIST CSE Students.\nI am planning to make an webstie for UNIST students.\nIt's about Study Groups. \n\n I need People who can \n do Frontend \n do Backend \n do Design",
+        "postedAt": "2023-11-01",
+        "updatedAt": "2023-11-02",
+        "expiredAt": "2023-12-31"
+    },
+    {
+        "id": 3,
+        "writer": "User04",
+        "studyGroupId": 4,
+        "title": "Recruiting Developers who want to make an website for UNIST",
+        "mainText": "Hello, I am UNIST CSE Students.\nI am planning to make an webstie for UNIST students.\nIt's about Study Groups. \n\n I need People who can \n do Frontend \n do Backend \n do Design",
+        "postedAt": "2023-11-01",
+        "updatedAt": "2023-11-02",
+        "expiredAt": "2023-12-31"
+    }
+]

@@ -3,7 +3,7 @@ import { Search } from "@/components/index/Search";
 import { StudyList } from "@/components/index/StudyList";
 
 import styled from "styled-components";
-import { PageNumber } from "@/components/index/PageNumber";
+import { PageNation } from "@/components/index/PageNation";
 
 const Outer = styled.div`
     display: flex;
@@ -20,7 +20,7 @@ export default function Home() {
                 <Outer>
                     <Search />
                     <StudyList />
-                    <PageNumber />
+                    <PageNation />
                 </Outer>
             </MainContent>
         </>

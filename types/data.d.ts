@@ -16,3 +16,18 @@ export interface STUDYGROUP_TYPE {
 export interface STUDYGROUPS_TYPE {
     studyGroupData: STUDYGROUP_TYPE_TYPE[];
 }
+
+export interface POST_TYPE {
+    id: number;
+    writer: string;
+    studyGroupId: number;
+    title: string;
+    mainText: string;
+    postedAt: string;
+    updatedAt: string;
+    expiredAt: string;
+}
+
+export interface POSTS_TYPE {
+    postData: POST_TYPE[];
+}

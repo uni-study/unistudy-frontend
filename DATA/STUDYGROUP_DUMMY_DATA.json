@@ -1,6 +1,6 @@
 [
     {
-        "id": 1,
+        "id": 0,
         "leader": "User01",
         "title": "Recruiting Developers who want to make an website for UNIST",
         "description": "I want to recruite unist developers who want to make an website for UNIST.",
@@ -13,7 +13,7 @@
         "contact": "lha0@unist.ac.kr"
     },
     {
-        "id": 2,
+        "id": 1,
         "leader": "User02",
         "title": "Recruiting Developers who want to make an website for UNIST",
         "description": "I want to recruite unist developers who want to make an website for UNIST.",
@@ -26,7 +26,7 @@
         "contact": "lha0@unist.ac.kr"
     },
     {
-        "id": 3,
+        "id": 2,
         "leader": "User03",
         "title": "Recruiting Developers who want to make an website for UNIST",
         "description": "I want to recruite unist developers who want to make an website for UNIST.",
@@ -39,7 +39,7 @@
         "contact": "lha0@unist.ac.kr"
     },
     {
-        "id": 4,
+        "id": 3,
         "leader": "User04",
         "title": "Recruiting Developers who want to make an website for UNIST",
         "description": "I want to recruite unist developers who want to make an website for UNIST.",
