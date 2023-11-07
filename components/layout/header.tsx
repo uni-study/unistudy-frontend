@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -25,6 +26,12 @@ const Button = styled.button`
 `;
 
 export default function Header() {
+    const router = useRouter();
+
+    const handlerOnClick = () => {
+        router.push("/writePost");
+    };
+
     const [isLogIn, setIsLogIn] = useState(false);
     if (isLogIn) {
         return <></>;
@@ -39,7 +46,7 @@ export default function Header() {
                     height={45}
                 />
                 <ButtonBox>
-                    <Button>+ New Post</Button>
+                    <Button onClick={handlerOnClick}>+ New Post</Button>
                     <Button>LogIn</Button>
                     <Button>SignUp</Button>
                 </ButtonBox>

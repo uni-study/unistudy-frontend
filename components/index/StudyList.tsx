@@ -2,6 +2,7 @@ import { STUDYGROUPS_TYPE } from "@/types/data";
 import STUDYGROUP_DUMMY_DATA from "@/DATA/STUDYGROUP_DUMMY_DATA.json";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import LineComponent from "../common/LineComponent";
 
 const Outer = styled.div`
     display: flex;
@@ -77,10 +78,7 @@ const Info = styled.div`
     font-size: 12px;
     font-weight: 600;
 `;
-const Line = styled.hr`
-    width: 100%;
-    color: #c1c1c1;
-`;
+
 const Writer = styled.div`
     width: 100%;
     height: 23px;
@@ -97,7 +95,6 @@ export function StudyList() {
     const router = useRouter();
     const moveToDetailPost = (pid: number) => {
         router.push(`/detailPost/${pid}`);
-        console.log("이동");
     };
     return (
         <>
@@ -118,7 +115,7 @@ export function StudyList() {
                                 <Info>{e.studyMethod}</Info>
                             </InfoBox>
 
-                            <Line></Line>
+                            <LineComponent />
                             <Writer>{e.leader}</Writer>
                         </ContentBox>
                     );

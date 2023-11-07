@@ -10,6 +10,12 @@ const Outer = styled.div`
 const Inner = styled.div`
     width: 100%;
     max-width: 1030px;
+    display: flex;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    flex-direction: column;
+    //align-items: center;
+    gap: 70px;
 `;
 export function MainContent({ children }: { children: ReactNode }) {
     return (

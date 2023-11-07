@@ -8,6 +8,7 @@ import MainText from "@/components/detailPost/MainText";
 import ParticipateBtn from "@/components/detailPost/ParticipateBtn";
 import Comment from "@/components/detailPost/Comment";
 import { POSTS_TYPE, POST_TYPE } from "@/types/data";
+import LineComponent from "@/components/common/LineComponent";
 
 const Outer = styled.div`
     display: inline-flex;
@@ -40,20 +41,18 @@ export default function Post() {
     return (
         <>
             <MainContent>
-                <Outer>
-                    <Title
-                        title={CurrentPost.title}
-                        writer={CurrentPost.writer}
-                        postedAt={CurrentPost.postedAt}
-                    />
-                    <Line />
-                    <Information studyGroupId={CurrentPost.studyGroupId} />
-                    <Line />
-                    <MainText mainText={CurrentPost.mainText} />
-                    <ParticipateBtn />
-                    <Line />
-                    <Comment />
-                </Outer>
+                <Title
+                    title={CurrentPost.title}
+                    writer={CurrentPost.writer}
+                    postedAt={CurrentPost.postedAt}
+                />
+                <LineComponent />
+                <Information studyGroupId={CurrentPost.studyGroupId} />
+                <LineComponent />
+                <MainText mainText={CurrentPost.mainText} />
+                <ParticipateBtn />
+                <LineComponent />
+                <Comment />
             </MainContent>
         </>
     );
