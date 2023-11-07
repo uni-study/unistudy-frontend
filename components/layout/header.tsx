@@ -6,6 +6,7 @@ import styled from "styled-components";
 const Outer = styled.div`
     display: flex;
     align-items: flex-start;
+    justify-content: space-between;
     gap: 415px;
     margin: 60px 99px 0px 99px;
 `;
@@ -28,13 +29,43 @@ const Button = styled.button`
 export default function Header() {
     const router = useRouter();
 
-    const handlerOnClick = () => {
+    const toWritePostPage = () => {
         router.push("/writePost");
     };
 
-    const [isLogIn, setIsLogIn] = useState(false);
+    const toMainPage = () => {
+        router.push("/");
+    };
+
+    const toMyPage = () => {
+        router.push("/myPage");
+    };
+
+    const [isLogIn, setIsLogIn] = useState(true);
     if (isLogIn) {
-        return <></>;
+        return (
+            <>
+                <Outer>
+                    <Img
+                        src={"/images/logos/Logo.png"}
+                        alt="Unistudy Logo"
+                        width={365}
+                        height={45}
+                        onClick={toMainPage}
+                    />
+                    <ButtonBox>
+                        <Button onClick={toWritePostPage}>+ New Post</Button>
+                        <Img
+                            src={"/images/icons/ProfileBasic.png"}
+                            alt="Profile"
+                            width={45}
+                            height={45}
+                            onClick={toMyPage}
+                        />
+                    </ButtonBox>
+                </Outer>
+            </>
+        );
     }
     return (
         <>
@@ -44,9 +75,10 @@ export default function Header() {
                     alt="Unistudy Logo"
                     width={365}
                     height={45}
+                    onClick={toMainPage}
                 />
                 <ButtonBox>
-                    <Button onClick={handlerOnClick}>+ New Post</Button>
+                    <Button onClick={toWritePostPage}>+ New Post</Button>
                     <Button>LogIn</Button>
                     <Button>SignUp</Button>
                 </ButtonBox>

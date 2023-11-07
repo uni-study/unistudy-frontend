@@ -1,0 +1,30 @@
+[
+    {
+        "id": 0,
+        "password": "1234",
+        "name": "홍길동",
+        "major": "CSE",
+        "profileImageURL": "/images/icons/ProfileBasic.png"
+    },
+    {
+        "id": 1,
+        "password": "1234",
+        "name": "김민수",
+        "major": "MSE",
+        "profileImageURL": "/images/icons/ProfileBasic.png"
+    },
+    {
+        "id": 2,
+        "password": "1234",
+        "name": "이영철",
+        "major": "IE",
+        "profileImageURL": "/images/icons/ProfileBasic.png"
+    },
+    {
+        "id": 3,
+        "password": "1234",
+        "name": "최승희",
+        "major": "EE",
+        "profileImageURL": "/images/icons/ProfileBasic.png"
+    }
+]

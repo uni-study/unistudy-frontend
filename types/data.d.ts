@@ -31,3 +31,15 @@ export interface POST_TYPE {
 export interface POSTS_TYPE {
     postData: POST_TYPE[];
 }
+
+export interface USER_TYPE {
+    id: number;
+    password: string;
+    name: string;
+    major: string;
+    profileImageURL: string;
+}
+
+export interface USERS_TYPE {
+    userData: USER_TYPE[];
+}
