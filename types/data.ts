@@ -13,7 +13,7 @@ export interface STUDYGROUP_TYPE {
 }
 
 export interface STUDYGROUPS_TYPE {
-    studyGroupData: STUDYGROUP_TYPE_TYPE[];
+    studyGroupData: STUDYGROUP_TYPE[];
 }
 
 export interface POST_TYPE {

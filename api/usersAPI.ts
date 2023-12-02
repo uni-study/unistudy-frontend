@@ -4,7 +4,7 @@ import axios, { AxiosResponse } from "axios";
 
 const instance = axios.create({
     //baseURL: "http://localhost:8080/",
-    baseURL: "http://10.64.154.163:8080",
+    baseURL: "http://10.64.154.163:8080/",
     headers: {
         "Content-Type": `application/json`,
         //"ngrok-skip-browser-warning": "69420",

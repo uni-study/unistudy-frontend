@@ -3,6 +3,8 @@ import STUDYGROUP_DUMMY_DATA from "@/DATA/STUDYGROUP_DUMMY_DATA.json";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import LineComponent from "../common/LineComponent";
+import { Post, StudyGroup } from "@/api/interface/data.interface";
+import { current } from "@reduxjs/toolkit";
 
 const Outer = styled.div`
     display: flex;
@@ -87,36 +89,72 @@ const Writer = styled.div`
     line-height: 23px;
 `;
 
-const StudyGroup: STUDYGROUPS_TYPE = {
-    studyGroupData: STUDYGROUP_DUMMY_DATA,
-};
-
-export function StudyList() {
+export function StudyList({
+    postList,
+    studyGroup,
+}: {
+    postList: Post[];
+    studyGroup: StudyGroup[];
+}) {
     const router = useRouter();
     const moveToDetailPost = (pid: number) => {
         router.push(`/detailPost/${pid}`);
     };
+
+    //게시글 띄울 때 필요한 정보
+    //postlist : title
+    //studyGroup : department, studyMethod, recuritmentDeadline, currentstate, name
+    //두개 연결: studygroupd의 id와 post의 studyGroupId가 같은 것
+
     return (
         <>
             <Outer>
-                {StudyGroup.studyGroupData.map((e, i) => {
+                {postList.map((e, i) => {
+                    const currentStudyGroupId = e.studygroupId;
+                    const currentStudyGroupInfo: StudyGroup | undefined =
+                        studyGroup.find(
+                            (item, idx) => item.id == currentStudyGroupId
+                        );
+                    console.log("dfalidjflahflidah", e.id);
                     return (
                         <ContentBox
                             key={i}
-                            onClick={() => moveToDetailPost(e.id)}
+                            onClick={() => {
+                                moveToDetailPost(e.id);
+                            }}
                         >
                             <FirstLine>
-                                <Date>{e.recruitmentDeadline}</Date>
-                                <CurrentState>{e.currentState}</CurrentState>
+                                <Date>
+                                    {currentStudyGroupInfo
+                                        ? currentStudyGroupInfo.recruitmentDeadline
+                                        : "not found"}
+                                </Date>
+                                <CurrentState>
+                                    {currentStudyGroupInfo
+                                        ? currentStudyGroupInfo.currentState
+                                        : "not found"}
+                                </CurrentState>
                             </FirstLine>
                             <Title>{e.title}</Title>
                             <InfoBox>
-                                <Info>{e.department}</Info>
-                                <Info>{e.studyMethod}</Info>
+                                <Info>
+                                    {currentStudyGroupInfo
+                                        ? currentStudyGroupInfo.department
+                                        : "not found"}
+                                </Info>
+                                <Info>
+                                    {currentStudyGroupInfo
+                                        ? currentStudyGroupInfo.studyMethod
+                                        : "not found"}
+                                </Info>
                             </InfoBox>
 
                             <LineComponent />
-                            <Writer>{e.leader}</Writer>
+                            <Writer>
+                                {currentStudyGroupInfo
+                                    ? currentStudyGroupInfo.name
+                                    : "not found"}
+                            </Writer>
                         </ContentBox>
                     );
                 })}

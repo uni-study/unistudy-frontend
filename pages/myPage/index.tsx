@@ -4,9 +4,10 @@ import { USERS_TYPE } from "@/types/data";
 import USER_INFO_DATA from "@/DATA/USER_INFO_DATA.json";
 import Image from "next/image";
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Users } from "@/api/usersAPI";
 import type { User } from "@/api/interface/data.interface";
+import axios, { AxiosResponse } from "axios";
 
 const ProfileBox = styled.div`
     display: flex;
@@ -52,25 +53,26 @@ const PostingList = styled.ol`
 const PostingListItem = styled.li``;
 
 export default function MyPage() {
-    const [user, setUser] = useState<User[]>([]);
-    Users.getUsers()
-        .then((data) => {
-            setUser(data);
-            console.log("here is", data);
-            console.log("user is ((((((", user);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    let [user, setUser] = useState<User[]>([]);
+
+    useEffect(() => {
+        axios
+            .get(`http://10.64.154.163:8080/users`)
+            .then((response) => {
+                setUser(response.data);
+                console.log(response.data);
+            })
+
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, []);
 
     return (
         <MainContent>
-            <div>hey</div>
-            {user.map((item) => {
+            {user.map((item: any, idx) => {
                 return (
                     <>
-                        <div>hey</div>
-
                         <div key={item.id}>
                             <h1>{item.name}</h1>
                             <h1>{item.email}</h1>

@@ -1,31 +1,39 @@
-export type User = {
+export interface User {
     id: number;
     password: string;
     name: string;
     email: string;
-};
+}
 
-export type StudyGroup = {
+export interface StudyGroup {
     id: number;
-    leader: string;
-    title: string;
+    leaderId: number;
+    name: string;
     description: string;
-    department: string;
+    department: number;
     numOfPeople: number;
-    studyMethod: string;
+    studyMethod: number;
     studyPeriod: number;
     recruitmentDeadline: string;
-    currentState: string;
+    currentState: number;
     contact: string;
-};
+}
 
-export type Post = {
+export interface Post {
     id: number;
-    writer: string;
-    studyGroupId: number;
+    writerId: number; //writer 의 id
+    studygroupId: number;
     title: string;
     mainText: string;
     postedAt: string;
     updatedAt: string;
     expiredAt: string;
-};
+}
+
+export interface Comment {
+    id: number;
+    postId: number;
+    userId: number;
+    mainText: string;
+    postedAt: string;
+}
