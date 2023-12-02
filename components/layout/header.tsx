@@ -41,6 +41,14 @@ export default function Header() {
         router.push("/myPage");
     };
 
+    const toLogInPage = () => {
+        router.push("/logIn");
+    };
+
+    const toSingUpPage = () => {
+        router.push("/signUp");
+    };
+
     const [isLogIn, setIsLogIn] = useState(true);
     if (isLogIn) {
         return (
@@ -79,8 +87,8 @@ export default function Header() {
                 />
                 <ButtonBox>
                     <Button onClick={toWritePostPage}>+ New Post</Button>
-                    <Button>LogIn</Button>
-                    <Button>SignUp</Button>
+                    <Button onClick={toLogInPage}>LogIn</Button>
+                    <Button onClick={toSingUpPage}>SignUp</Button>
                 </ButtonBox>
             </Outer>
         </>

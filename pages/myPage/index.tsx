@@ -4,6 +4,9 @@ import { USERS_TYPE } from "@/types/data";
 import USER_INFO_DATA from "@/DATA/USER_INFO_DATA.json";
 import Image from "next/image";
 import styled from "styled-components";
+import { useState } from "react";
+import { Users } from "@/api/usersAPI";
+import type { User } from "@/api/interface/data.interface";
 
 const ProfileBox = styled.div`
     display: flex;
@@ -48,13 +51,34 @@ const PostingList = styled.ol`
 
 const PostingListItem = styled.li``;
 
-const userInfo: USERS_TYPE = {
-    userData: USER_INFO_DATA,
-};
-
 export default function MyPage() {
+    const [user, setUser] = useState<User[]>([]);
+    Users.getUsers()
+        .then((data) => {
+            setUser(data);
+            console.log("here is", data);
+            console.log("user is ((((((", user);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
     return (
         <MainContent>
+            <div>hey</div>
+            {user.map((item) => {
+                return (
+                    <>
+                        <div>hey</div>
+
+                        <div key={item.id}>
+                            <h1>{item.name}</h1>
+                            <h1>{item.email}</h1>
+                            <h1>{item.password}</h1>
+                        </div>
+                    </>
+                );
+            })}
             <ProfileBox>
                 <ProfileImg
                     src={"/images/icons/ProfileBasic.png"}
