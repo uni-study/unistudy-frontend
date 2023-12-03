@@ -5,7 +5,7 @@ import { use, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { setIsLoggedIn, setUserInfo } from "@/store/modules/counter";
+import { setIsLoggedIn, setUserInfo } from "@/store/modules/user";
 
 const TotalBox = styled.div`
     display: flex;

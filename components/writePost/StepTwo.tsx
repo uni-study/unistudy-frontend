@@ -1,5 +1,12 @@
 import styled from "styled-components";
 import LineComponent from "@/components/common/LineComponent";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { RootState } from "@/store";
+import axios from "axios";
+import { API_URL } from "@/api/commonAPI";
+import { setStepTwoData } from "@/store/modules/post_stepTwo";
+import { stat } from "fs";
 
 const StepTwoBox = styled.div`
     width: 100%;
@@ -36,16 +43,114 @@ const ContentOfPlan = styled.textarea`
         color: ##9d9d9d;
     }
 `;
-
+interface StepTwoInterface {
+    writerId?: number;
+    studygroupId: number;
+    title: string;
+    mainText: string;
+    postedAt: string;
+    updatedAt: string;
+    expiredAt: string;
+}
 export default function StepTwo() {
+    const dispatch = useDispatch();
+    const curUserInfo = useSelector((state: RootState) => state.user.userInfo);
+    const curStepOne = useSelector(
+        (state: RootState) => state.stepOne.stepOneData
+    );
+    const USER_ID = curUserInfo?.id;
+    const [curStudyGroupId, setCurStudyGroup] = useState<number>(0);
+
+    if (curUserInfo) {
+        axios
+            .get(`${API_URL}/study-groups?leaderId=${USER_ID}`)
+            .then((response) => {
+                console.log("response here ", response.data);
+                console.log("curStepOne here ", curStepOne);
+                const res = response.data;
+                res.forEach((item: any) => {
+                    if (
+                        item.contact == curStepOne?.contact &&
+                        item.currentState == curStepOne?.currentState &&
+                        item.department == curStepOne?.department &&
+                        item.description == curStepOne?.description &&
+                        item.leaderId == curStepOne?.leaderId &&
+                        item.name == curStepOne?.name &&
+                        item.numOfPeople == curStepOne?.numOfPeople &&
+                        item.studyMethod == curStepOne?.studyMethod &&
+                        item.studyPeriod == curStepOne?.studyPeriod
+                    ) {
+                        setCurStudyGroup(item.id);
+                        console.log("1 curStudyGroupId is ", curStudyGroupId);
+                    }
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    console.log("2 curStudyGroupId is ", curStudyGroupId);
+
+    let [userTwoData, setUserTwoData] = useState<StepTwoInterface>({
+        writerId: curUserInfo?.id, //userId
+        studygroupId: 0,
+        title: "", //제목
+        mainText: "", //본문
+        postedAt: "2020-01-20T15:45:00",
+        updatedAt: "2020-01-20T15:45:00",
+        expiredAt: "2020-01-20T15:45:00",
+    });
+
+    useEffect(() => {
+        setUserTwoData((prevData) => ({
+            ...prevData,
+            studygroupId: curStudyGroupId,
+        }));
+        console.log("3 curStudyGroupId is ", curStudyGroupId);
+    }, [curStudyGroupId]);
+
+    const handleInputChange = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        field: keyof StepTwoInterface
+    ) => {
+        const { value } = e.target;
+        setUserTwoData((prevData) => ({
+            ...prevData,
+            [field]: value,
+        }));
+    };
+    const handleTextChange = (
+        e: React.ChangeEvent<HTMLTextAreaElement>,
+        field: keyof StepTwoInterface
+    ) => {
+        const { value } = e.target;
+        setUserTwoData((prevData) => ({
+            ...prevData,
+            [field]: value,
+        }));
+    };
+
+    useEffect(() => {
+        dispatch(setStepTwoData(userTwoData));
+    }, [userTwoData, dispatch]);
+
+    console.log("userTwodata is ", userTwoData);
+
     return (
         <>
             <StepTwoBox>
                 <TitleStepTwo>Introduce about your plan</TitleStepTwo>
                 <LineComponent />
                 <TitleOfSection>Title</TitleOfSection>
-                <TitleOfPlan placeholder="Add a Title"></TitleOfPlan>
-                <ContentOfPlan placeholder="Add a Content"></ContentOfPlan>
+                <TitleOfPlan
+                    placeholder="Add a Title"
+                    onChange={(e) => handleInputChange(e, "title")}
+                ></TitleOfPlan>
+                <ContentOfPlan
+                    placeholder="Add a Content"
+                    onChange={(e) => handleTextChange(e, "mainText")}
+                ></ContentOfPlan>
             </StepTwoBox>
         </>
     );

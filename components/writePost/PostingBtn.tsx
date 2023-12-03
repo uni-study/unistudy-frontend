@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { useState } from "react";
-import type { Post } from "@/api/interface/data.interface";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import axios from "axios";
+import { API_URL } from "@/api/commonAPI";
+import { studyMethod } from "@/types/data";
+import { useRouter } from "next/router";
 
 const ButtonBox = styled.div`
     display: flex;
@@ -27,20 +32,39 @@ const ButtonOfPosting = styled.button`
 `;
 
 export default function PostingBtn() {
-    const [post, setPost] = useState<Post[]>([]);
-    Posts.addPost(post)
-        .then((data) => {
-            console.log(data);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-    const handlerPosting = () => {};
+    const stepTwoData = useSelector(
+        (state: RootState) => state.stepTwo.stepTwoData
+    );
+    const router = useRouter();
+
+    const handlerPosting = () => {
+        if (stepTwoData) {
+            const postData = {
+                ...stepTwoData,
+            };
+
+            axios
+                .post(`${API_URL}/post`, postData)
+                .then((response) => {
+                    console.log(postData);
+                    console.log("Post request successful:", response.data);
+                    // 성공 시 필요한 작업 수행
+                })
+                .catch((error) => {
+                    console.error("Error posting data:", error);
+                    // 에러 처리
+                });
+
+            router.push("/");
+        } else {
+            alert("데이터가 입력되지 않았습니다.");
+        }
+    };
     return (
         <>
             <ButtonBox>
                 <ButtonOfCancel>Cancel</ButtonOfCancel>
-                <ButtonOfPosting onClick={() => handlerPosting}>
+                <ButtonOfPosting onClick={handlerPosting}>
                     Posting
                 </ButtonOfPosting>
             </ButtonBox>

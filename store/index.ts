@@ -1,6 +1,8 @@
 // store.js
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./modules/counter";
+import userReducer from "./modules/user";
+import stepOneReducer from "./modules/post_stepOne";
+import stepTwoReducer from "./modules/post_stepTwo";
 
 const loadState = () => {
     try {
@@ -25,7 +27,8 @@ const initialState = loadState();
 export const store = configureStore({
     reducer: {
         user: userReducer,
-        // 다른 리듀서들도 필요하면 여기에 추가
+        stepOne: stepOneReducer,
+        stepTwo: stepTwoReducer,
     },
     preloadedState: initialState,
 });

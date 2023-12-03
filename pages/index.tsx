@@ -32,8 +32,6 @@ export default function Home() {
             });
     }, []);
 
-    console.log("postlist is ", postList);
-
     useEffect(() => {
         axios
             .get(`${API_URL}/study-groups`)

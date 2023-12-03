@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "@/store/modules/counter";
+import { logoutUser } from "@/store/modules/user";
 
 const Outer = styled.div`
     display: flex;
@@ -61,7 +61,7 @@ export default function Header() {
         router.push("/logIn");
     };
 
-    const toSingUpPage = () => {
+    const toSignUpPage = () => {
         router.push("/signUp");
     };
 
@@ -103,9 +103,8 @@ export default function Header() {
                     onClick={toMainPage}
                 />
                 <ButtonBox>
-                    <Button onClick={toWritePostPage}>+ New Post</Button>
                     <Button onClick={toLogInPage}>LogIn</Button>
-                    <Button onClick={toSingUpPage}>SignUp</Button>
+                    <Button onClick={toSignUpPage}>SignUp</Button>
                 </ButtonBox>
             </Outer>
         </>
