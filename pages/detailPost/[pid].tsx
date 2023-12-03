@@ -4,16 +4,13 @@ import { MainContent } from "@/components/layout/mainContent";
 import Title from "@/components/detailPost/Title";
 import Information from "@/components/detailPost/Information";
 import MainText from "@/components/detailPost/MainText";
-import ParticipateBtn from "@/components/detailPost/ParticipateBtn";
+import PorDBtn from "@/components/detailPost/PorDBtn";
 import Comment from "@/components/detailPost/Comment";
 import LineComponent from "@/components/common/LineComponent";
 import { Post, StudyGroup } from "@/api/interface/data.interface";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { GetServerSideProps } from "next";
 import { API_URL } from "@/api/commonAPI";
-import { current } from "@reduxjs/toolkit";
-import { POST_TYPE } from "@/api/interface/data.interface";
 
 const Outer = styled.div`
     display: inline-flex;
@@ -37,8 +34,8 @@ export default function DetailPost() {
     const router = useRouter();
     const POST_ID = router.query.pid;
 
-    let [currentPost, setCurrentPost] = useState<Post[]>([]);
-    let [currentSG, setCurrentSG] = useState<StudyGroup[]>([]);
+    let [currentPost, setCurrentPost] = useState<Post | null>(null);
+    let [currentSG, setCurrentSG] = useState<StudyGroup | null>(null);
 
     useEffect(() => {
         axios
@@ -54,7 +51,10 @@ export default function DetailPost() {
 
     console.log("after currentPost ", currentPost);
 
-    const STUDY_GROUP_ID: number = currentPost.studygroupId;
+    let STUDY_GROUP_ID: number = 0;
+    if (currentPost) {
+        STUDY_GROUP_ID = currentPost.studygroupId;
+    }
 
     useEffect(() => {
         axios
@@ -85,7 +85,7 @@ export default function DetailPost() {
                 <Information studyGroupId={STUDY_GROUP_ID} />
                 <LineComponent />
                 <MainText mainText={currentPost.mainText} />
-                <ParticipateBtn />
+                <PorDBtn />
                 <LineComponent />
                 <Comment />
             </MainContent>

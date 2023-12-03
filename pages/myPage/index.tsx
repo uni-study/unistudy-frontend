@@ -1,14 +1,14 @@
 import LineComponent from "@/components/common/LineComponent";
 import { MainContent } from "@/components/layout/mainContent";
-import { USERS_TYPE } from "@/types/data";
-import USER_INFO_DATA from "@/DATA/USER_INFO_DATA.json";
 import Image from "next/image";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import type { User } from "@/api/interface/data.interface";
+import type { Post, StudyGroup, User } from "@/api/interface/data.interface";
 import axios, { AxiosResponse } from "axios";
 import { RootState } from "@/store";
 import { useSelector } from "react-redux";
+import { API_URL } from "@/api/commonAPI";
+import { useRouter } from "next/router";
 
 const ProfileBox = styled.div`
     display: flex;
@@ -32,7 +32,7 @@ const MyStudyInfoTitle = styled.h1`
     font-size: 40px;
     font-weight: 600;
 `;
-const MyStudyInfo = styled.ol`
+const MyStudyInfo = styled.ul`
     font-size: 30px;
     font-weight: 400;
 `;
@@ -46,7 +46,7 @@ const PostingListTitle = styled.h1`
     font-weight: 600;
 `;
 
-const PostingList = styled.ol`
+const PostingList = styled.ul`
     font-size: 30px;
     font-weight: 400;
 `;
@@ -55,8 +55,42 @@ const PostingListItem = styled.li``;
 
 export default function MyPage() {
     const userInfo = useSelector((state: RootState) => state.user.userInfo);
+    const currentUID = userInfo?.id;
+    const [userPosts, setUserPosts] = useState<Post[]>();
+    const [userStudyGroups, setUserStudyGroups] = useState<StudyGroup[]>();
+    const router = useRouter();
 
-    console.log(userInfo);
+    useEffect(() => {
+        axios
+            .get(`${API_URL}/posts?writerId=${currentUID}`)
+            .then((response) => {
+                console.log(response.data);
+                setUserPosts(response.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+
+    useEffect(() => {
+        axios
+            .get(`${API_URL}/study-groups?leaderId=${currentUID}`)
+            .then((response) => {
+                console.log(response.data);
+                setUserStudyGroups(response.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+
+    console.log("userPosts: ", userPosts);
+    console.log("userStudyGroups: ", userStudyGroups);
+
+    const handleMoveToPost = (pid: number) => {
+        router.push(`/detailPost/${pid}`);
+    };
+
     if (!userInfo) return <h1> 잘못된 접근 입니다. </h1>;
     else {
         const USER_NAME = userInfo.name;
@@ -75,14 +109,25 @@ export default function MyPage() {
                 <MyStudyInfoBox>
                     <MyStudyInfoTitle>My Study Group</MyStudyInfoTitle>
                     <MyStudyInfo>
-                        <MyStudyInfoItem></MyStudyInfoItem>
+                        {userStudyGroups?.map((studyGroup) => (
+                            <MyStudyInfoItem key={studyGroup.id}>
+                                {studyGroup.name}
+                            </MyStudyInfoItem>
+                        ))}
                     </MyStudyInfo>
                 </MyStudyInfoBox>
                 <LineComponent />
                 <PostingListBox>
                     <PostingListTitle>Posting List</PostingListTitle>
                     <PostingList>
-                        <PostingListItem></PostingListItem>
+                        {userPosts?.map((post) => (
+                            <PostingListItem
+                                key={post.id}
+                                onClick={() => handleMoveToPost(post.id)}
+                            >
+                                {post.title}{" "}
+                            </PostingListItem>
+                        ))}
                     </PostingList>
                 </PostingListBox>
             </MainContent>

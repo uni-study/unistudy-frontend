@@ -6,7 +6,10 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
-const Outer = styled.div``;
+const Outer = styled.div`
+    display: flex;
+    justify-content: center;
+`;
 const Button = styled.button`
     width: 270px;
     height: 45px;
@@ -19,7 +22,7 @@ const Button = styled.button`
     font-weight: 600;
 `;
 
-export default function ParticipateBtn() {
+export default function PorDBtn() {
     const router = useRouter();
     const currentPID = router.query.pid;
     const curUserInfo = useSelector((state: RootState) => state.user.userInfo);

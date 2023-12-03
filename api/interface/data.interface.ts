@@ -21,7 +21,7 @@ export interface StudyGroup {
 
 export interface Post {
     id: number;
-    writerId: number; //writer 의 id
+    writerId: number;
     studygroupId: number;
     title: string;
     mainText: string;
