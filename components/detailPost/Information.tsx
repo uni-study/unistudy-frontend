@@ -1,10 +1,15 @@
 import styled from "styled-components";
-import STUDYGROUP_DUMMY_DATA from "@/DATA/STUDYGROUP_DUMMY_DATA.json";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_URL } from "@/api/commonAPI";
-import { current } from "@reduxjs/toolkit";
 import { StudyGroup } from "@/api/interface/data.interface";
+import {
+    department,
+    studyMethod,
+    studyPeriod,
+    numOfPeople,
+    currentState,
+} from "@/types/data";
 
 type PROPS_TYPE = {
     studyGroupId: number;
@@ -42,7 +47,7 @@ const InfoData = styled.div`
 
 export default function Information(props: PROPS_TYPE) {
     const STUDY_GROUP_ID = props.studyGroupId;
-    let [currentSG, setCurrentSG] = useState<StudyGroup[]>([]);
+    let [currentSG, setCurrentSG] = useState<StudyGroup>();
 
     useEffect(() => {
         axios
@@ -59,28 +64,43 @@ export default function Information(props: PROPS_TYPE) {
     if (!currentSG) {
         return <h1>Not FOUND</h1>;
     } else {
+        const deadline = new Date(currentSG.recruitmentDeadline)
+            .toISOString()
+            .substring(0, 10);
         return (
             <>
                 <Outer>
                     <InfoItem>
                         <InfoName>Department</InfoName>
-                        <InfoData>{currentSG.department}</InfoData>
+                        <InfoData>
+                            {department[currentSG.department - 1].substring(3)}
+                        </InfoData>
                     </InfoItem>
                     <InfoItem>
                         <InfoName># of People</InfoName>
-                        <InfoData>{currentSG.numOfPeople}</InfoData>
+                        <InfoData>
+                            {numOfPeople[currentSG.numOfPeople].substring(3)}
+                        </InfoData>
                     </InfoItem>
                     <InfoItem>
                         <InfoName>StudyMethod</InfoName>
-                        <InfoData>{currentSG.studyMethod}</InfoData>
+                        <InfoData>
+                            {studyMethod[currentSG.studyMethod - 1].substring(
+                                3
+                            )}
+                        </InfoData>
                     </InfoItem>
                     <InfoItem>
                         <InfoName>StudyPeriod</InfoName>
-                        <InfoData>{currentSG.studyPeriod}</InfoData>
+                        <InfoData>
+                            {studyPeriod[currentSG.studyPeriod - 1].substring(
+                                3
+                            )}
+                        </InfoData>
                     </InfoItem>
                     <InfoItem>
                         <InfoName>Recruitment Deadline</InfoName>
-                        <InfoData>{currentSG.recruitmentDeadline}</InfoData>
+                        <InfoData>{deadline}</InfoData>
                     </InfoItem>
                     <InfoItem>
                         <InfoName>Contact</InfoName>

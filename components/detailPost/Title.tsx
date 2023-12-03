@@ -34,7 +34,7 @@ const PostedAt = styled.div`
 export default function Title(props: PROPS_TYPE) {
     const title = props.title;
     const writer = props.writer;
-    const postedAt = props.postedAt;
+    const postedAt = new Date(props.postedAt).toISOString().substring(0, 10);
 
     return (
         <>

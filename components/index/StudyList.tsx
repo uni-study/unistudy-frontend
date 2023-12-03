@@ -2,6 +2,13 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import LineComponent from "../common/LineComponent";
 import { Post, StudyGroup } from "@/api/interface/data.interface";
+import {
+    department,
+    studyMethod,
+    numOfPeople,
+    studyPeriod,
+    currentState,
+} from "@/types/data";
 
 const Outer = styled.div`
     display: flex;
@@ -31,7 +38,7 @@ const FirstLine = styled.div`
     align-items: center;
 `; //date + currentstate
 
-const Date = styled.div`
+const DateDIV = styled.div`
     width: 87px;
     height: 23px;
     color: #a1a1a1;
@@ -111,47 +118,56 @@ export function StudyList({
                         studyGroup.find(
                             (item, idx) => item.id == currentStudyGroupId
                         );
-                    return (
-                        <ContentBox
-                            key={i}
-                            onClick={() => {
-                                moveToDetailPost(e.id);
-                            }}
-                        >
-                            <FirstLine>
-                                <Date>
-                                    {currentStudyGroupInfo
-                                        ? currentStudyGroupInfo.recruitmentDeadline
-                                        : "not found"}
-                                </Date>
-                                <CurrentState>
-                                    {currentStudyGroupInfo
-                                        ? currentStudyGroupInfo.currentState
-                                        : "not found"}
-                                </CurrentState>
-                            </FirstLine>
-                            <Title>{e.title}</Title>
-                            <InfoBox>
-                                <Info>
-                                    {currentStudyGroupInfo
-                                        ? currentStudyGroupInfo.department
-                                        : "not found"}
-                                </Info>
-                                <Info>
-                                    {currentStudyGroupInfo
-                                        ? currentStudyGroupInfo.studyMethod
-                                        : "not found"}
-                                </Info>
-                            </InfoBox>
 
-                            <LineComponent />
-                            <Writer>
-                                {currentStudyGroupInfo
-                                    ? currentStudyGroupInfo.name
-                                    : "not found"}
-                            </Writer>
-                        </ContentBox>
-                    );
+                    if (!currentStudyGroupInfo) {
+                        return (
+                            <>
+                                <ContentBox>
+                                    <h1>스터디를 찾을 수 없습니다.</h1>
+                                </ContentBox>
+                            </>
+                        );
+                    } else {
+                        const deadline = new Date(
+                            currentStudyGroupInfo.recruitmentDeadline
+                        )
+                            .toISOString()
+                            .substring(0, 10);
+                        return (
+                            <ContentBox
+                                key={i}
+                                onClick={() => {
+                                    moveToDetailPost(e.id);
+                                }}
+                            >
+                                <FirstLine>
+                                    <DateDIV>{deadline}</DateDIV>
+                                    <CurrentState>
+                                        {currentState[
+                                            currentStudyGroupInfo.currentState
+                                        ].substring(3)}
+                                    </CurrentState>
+                                </FirstLine>
+                                <Title>{e.title}</Title>
+                                <InfoBox>
+                                    <Info>
+                                        {department[
+                                            currentStudyGroupInfo.department - 1
+                                        ].substring(3)}
+                                    </Info>
+                                    <Info>
+                                        {studyMethod[
+                                            currentStudyGroupInfo.studyMethod -
+                                                1
+                                        ].substring(3)}
+                                    </Info>
+                                </InfoBox>
+
+                                <LineComponent />
+                                <Writer>{currentStudyGroupInfo.name}</Writer>
+                            </ContentBox>
+                        );
+                    }
                 })}
             </Outer>
         </>

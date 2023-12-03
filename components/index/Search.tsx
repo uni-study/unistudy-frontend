@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { department, studyMethod } from "@/types/data";
 
 const Outer = styled.div``;
 const Title = styled.h1`
@@ -31,27 +32,6 @@ const SearchBar = styled.input`
     border: #fff;
     background: #efeff1;
 `;
-
-const department: string[] = [
-    "All",
-    "ME",
-    "CUEEn",
-    "MSE",
-    "ECE",
-    "NE",
-    "Design",
-    "BME",
-    "IE",
-    "BS",
-    "EE",
-    "CSE",
-    "Physics",
-    "MS",
-    "Chemistry",
-    "Business",
-];
-
-const studyMethod = ["Online", "Offline", "On+Offline"];
 
 export function Search() {
     return (

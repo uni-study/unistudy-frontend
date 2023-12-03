@@ -90,8 +90,6 @@ export default function StepTwo() {
             });
     }
 
-    console.log("2 curStudyGroupId is ", curStudyGroupId);
-
     let [userTwoData, setUserTwoData] = useState<StepTwoInterface>({
         writerId: curUserInfo?.id, //userId
         studygroupId: 0,
@@ -107,7 +105,6 @@ export default function StepTwo() {
             ...prevData,
             studygroupId: curStudyGroupId,
         }));
-        console.log("3 curStudyGroupId is ", curStudyGroupId);
     }, [curStudyGroupId]);
 
     const handleInputChange = (

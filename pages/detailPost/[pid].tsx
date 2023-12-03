@@ -13,10 +13,9 @@ import axios from "axios";
 import { API_URL } from "@/api/commonAPI";
 
 const Outer = styled.div`
-    display: inline-flex;
-    padding-top: 60px;
-    padding-bottom: 60px;
+    display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     gap: 70px;
 `;
@@ -76,18 +75,20 @@ export default function DetailPost() {
     return (
         <>
             <MainContent>
-                <Title
-                    title={currentPost.title}
-                    writer={currentSG.name}
-                    postedAt={currentPost.postedAt}
-                />
-                <LineComponent />
-                <Information studyGroupId={STUDY_GROUP_ID} />
-                <LineComponent />
-                <MainText mainText={currentPost.mainText} />
-                <PorDBtn />
-                <LineComponent />
-                <Comment />
+                <Outer>
+                    <Title
+                        title={currentPost.title}
+                        writer={currentSG.name}
+                        postedAt={currentPost.postedAt}
+                    />
+                    <LineComponent />
+                    <Information studyGroupId={STUDY_GROUP_ID} />
+                    <LineComponent />
+                    <MainText mainText={currentPost.mainText} />
+                    <PorDBtn />
+                    <LineComponent />
+                    <Comment />
+                </Outer>
             </MainContent>
         </>
     );

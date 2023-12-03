@@ -33,7 +33,7 @@ export interface Post {
 export interface Comment {
     id: number;
     postId: number;
-    userId: number;
+    writerId: number;
     mainText: string;
     postedAt: string;
 }

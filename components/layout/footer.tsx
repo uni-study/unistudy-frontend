@@ -2,6 +2,7 @@ import Image from "next/image";
 import styled from "styled-components";
 
 const Outer = styled.div`
+    width: 1240px;
     padding: 51px 100px 30.34px 100px;
     background-color: #f1f1f1;
 `;

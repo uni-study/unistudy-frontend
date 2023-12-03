@@ -5,6 +5,8 @@ const Outer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 200px;
+    width: 1030px;
 `;
 
 const Inner = styled.div`
@@ -14,7 +16,6 @@ const Inner = styled.div`
     padding-top: 60px;
     padding-bottom: 60px;
     flex-direction: column;
-    //align-items: center;
     gap: 70px;
 `;
 export function MainContent({ children }: { children: ReactNode }) {
