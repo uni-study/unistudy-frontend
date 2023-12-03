@@ -6,7 +6,6 @@ const instance = axios.create({
     baseURL: "http://cde3-117-110-97-144.ngrok-free.app",
     headers: {
         "Content-Type": `application/json`,
-        "ngrok-skip-browser-warning": "69420",
     },
 
     timeout: 15000,

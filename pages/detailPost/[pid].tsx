@@ -10,6 +10,10 @@ import LineComponent from "@/components/common/LineComponent";
 import { Post, StudyGroup } from "@/api/interface/data.interface";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { GetServerSideProps } from "next";
+import { API_URL } from "@/api/commonAPI";
+import { current } from "@reduxjs/toolkit";
+import { POST_TYPE } from "@/api/interface/data.interface";
 
 const Outer = styled.div`
     display: inline-flex;
@@ -29,17 +33,16 @@ const Line = styled.hr`
 // studygroup 내용
 //post의 타이틀, 메인텍스트, postedAt
 
-export default function Posting() {
+export default function DetailPost() {
     const router = useRouter();
-    console.log("routing");
-
-    console.log(router.query);
-    const pid = router.query.pid;
+    const POST_ID = router.query.pid;
 
     let [currentPost, setCurrentPost] = useState<Post[]>([]);
+    let [currentSG, setCurrentSG] = useState<StudyGroup[]>([]);
+
     useEffect(() => {
         axios
-            .get(`http://10.64.154.163:8080/posts/${pid}`)
+            .get(`${API_URL}/post/${POST_ID}`)
             .then((response) => {
                 setCurrentPost(response.data);
             })
@@ -47,33 +50,41 @@ export default function Posting() {
             .catch(function (error) {
                 console.log(error);
             });
-    }, []);
+    }, [POST_ID]);
 
-    let currentStudygroupID = currentPost;
+    console.log("after currentPost ", currentPost);
 
-    //const pid = router.query.all;
+    const STUDY_GROUP_ID: number = currentPost.studygroupId;
 
-    if (!true) {
+    useEffect(() => {
+        axios
+            .get(`${API_URL}/study-groups/${STUDY_GROUP_ID}`)
+            .then((response) => {
+                setCurrentSG(response.data);
+            })
+
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, [STUDY_GROUP_ID]);
+
+    console.log("currentSG is ", currentSG);
+
+    if (!currentPost || !currentSG) {
         return <h1> Loading ... </h1>;
     }
     return (
         <>
             <MainContent>
                 <Title
-                    //title={currentPost.title}
-                    title={"hi"}
-                    //writer={currentPost.writer}
-                    writer={"writer"}
-                    //postedAt={currentPost.postedAt}
-                    postedAt={"postedAt"}
+                    title={currentPost.title}
+                    writer={currentSG.name}
+                    postedAt={currentPost.postedAt}
                 />
                 <LineComponent />
-                <Information //studyGroupId={currentPost.studygroupId}
-                    studyGroupId={2}
-                />
-
+                <Information studyGroupId={STUDY_GROUP_ID} />
                 <LineComponent />
-                <MainText mainText={"currentPost.mainText"} />
+                <MainText mainText={currentPost.mainText} />
                 <ParticipateBtn />
                 <LineComponent />
                 <Comment />

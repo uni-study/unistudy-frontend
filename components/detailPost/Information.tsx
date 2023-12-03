@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import STUDYGROUP_DUMMY_DATA from "@/DATA/STUDYGROUP_DUMMY_DATA.json";
-import { STUDYGROUP_TYPE, STUDYGROUPS_TYPE } from "@/types/data";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { API_URL } from "@/api/commonAPI";
+import { current } from "@reduxjs/toolkit";
+import { StudyGroup } from "@/api/interface/data.interface";
 
 type PROPS_TYPE = {
     studyGroupId: number;
-};
-
-const StudyGroups: STUDYGROUPS_TYPE = {
-    studyGroupData: STUDYGROUP_DUMMY_DATA,
 };
 
 const Outer = styled.div`
@@ -41,12 +41,22 @@ const InfoData = styled.div`
 `;
 
 export default function Information(props: PROPS_TYPE) {
-    const StudyGroup: STUDYGROUP_TYPE | undefined =
-        StudyGroups.studyGroupData.find(
-            (studyGroup) => studyGroup.id === props.studyGroupId
-        );
+    const STUDY_GROUP_ID = props.studyGroupId;
+    let [currentSG, setCurrentSG] = useState<StudyGroup[]>([]);
 
-    if (!StudyGroup) {
+    useEffect(() => {
+        axios
+            .get(`${API_URL}/study-groups/${STUDY_GROUP_ID}`)
+            .then((response) => {
+                setCurrentSG(response.data);
+            })
+
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, [STUDY_GROUP_ID]);
+
+    if (!currentSG) {
         return <h1>Not FOUND</h1>;
     } else {
         return (
@@ -54,27 +64,27 @@ export default function Information(props: PROPS_TYPE) {
                 <Outer>
                     <InfoItem>
                         <InfoName>Department</InfoName>
-                        <InfoData>{StudyGroup.department}</InfoData>
+                        <InfoData>{currentSG.department}</InfoData>
                     </InfoItem>
                     <InfoItem>
                         <InfoName># of People</InfoName>
-                        <InfoData>{StudyGroup.numOfPeople}</InfoData>
+                        <InfoData>{currentSG.numOfPeople}</InfoData>
                     </InfoItem>
                     <InfoItem>
                         <InfoName>StudyMethod</InfoName>
-                        <InfoData>{StudyGroup.studyMethod}</InfoData>
+                        <InfoData>{currentSG.studyMethod}</InfoData>
                     </InfoItem>
                     <InfoItem>
                         <InfoName>StudyPeriod</InfoName>
-                        <InfoData>{StudyGroup.studyPeriod}</InfoData>
+                        <InfoData>{currentSG.studyPeriod}</InfoData>
                     </InfoItem>
                     <InfoItem>
                         <InfoName>Recruitment Deadline</InfoName>
-                        <InfoData>{StudyGroup.recruitmentDeadline}</InfoData>
+                        <InfoData>{currentSG.recruitmentDeadline}</InfoData>
                     </InfoItem>
                     <InfoItem>
                         <InfoName>Contact</InfoName>
-                        <InfoData>{StudyGroup.contact}</InfoData>
+                        <InfoData>{currentSG.contact}</InfoData>
                     </InfoItem>
                 </Outer>
             </>

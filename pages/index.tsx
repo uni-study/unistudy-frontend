@@ -7,6 +7,7 @@ import { PageNation } from "@/components/index/PageNation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Post, StudyGroup } from "@/api/interface/data.interface";
+import { API_URL } from "@/api/commonAPI";
 
 const Outer = styled.div`
     display: flex;
@@ -21,7 +22,7 @@ export default function Home() {
     let [studyGroup, setStudygroup] = useState<StudyGroup[]>([]);
     useEffect(() => {
         axios
-            .get(`http://10.64.154.163:8080/posts`)
+            .get(`${API_URL}/posts`)
             .then((response) => {
                 setPostlist(response.data);
             })
@@ -31,9 +32,11 @@ export default function Home() {
             });
     }, []);
 
+    console.log("postlist is ", postList);
+
     useEffect(() => {
         axios
-            .get(`http://10.64.154.163:8080/study-groups`)
+            .get(`${API_URL}/study-groups`)
             .then((response) => {
                 setStudygroup(response.data);
             })

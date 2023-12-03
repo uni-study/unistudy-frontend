@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import LineComponent from "../common/LineComponent";
 import { Post, StudyGroup } from "@/api/interface/data.interface";
 import { current } from "@reduxjs/toolkit";
+import Link from "next/link";
 
 const Outer = styled.div`
     display: flex;
@@ -101,6 +102,8 @@ export function StudyList({
         router.push(`/detailPost/${pid}`);
     };
 
+    let tempid = 39;
+
     //게시글 띄울 때 필요한 정보
     //postlist : title
     //studyGroup : department, studyMethod, recuritmentDeadline, currentstate, name
@@ -115,7 +118,6 @@ export function StudyList({
                         studyGroup.find(
                             (item, idx) => item.id == currentStudyGroupId
                         );
-                    console.log("dfalidjflahflidah", e.id);
                     return (
                         <ContentBox
                             key={i}
@@ -123,6 +125,7 @@ export function StudyList({
                                 moveToDetailPost(e.id);
                             }}
                         >
+                            <Link href={`/detailPost/`}>Htis iseij </Link>
                             <FirstLine>
                                 <Date>
                                     {currentStudyGroupInfo
