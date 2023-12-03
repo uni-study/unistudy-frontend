@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { Posts } from "@/api/postsAPI";
 import type { Post } from "@/api/interface/data.interface";
 
 const ButtonBox = styled.div`

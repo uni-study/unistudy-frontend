@@ -1,6 +1,6 @@
 export interface User {
     id: number;
-    password: string;
+    pw: string;
     name: string;
     email: string;
 }
@@ -36,4 +36,12 @@ export interface Comment {
     userId: number;
     mainText: string;
     postedAt: string;
+}
+
+export interface LOGED_INFO_INTERFACE {
+    logged: boolean;
+    id: number;
+    password: string;
+    name: string;
+    email: string;
 }

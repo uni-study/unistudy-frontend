@@ -5,9 +5,10 @@ import USER_INFO_DATA from "@/DATA/USER_INFO_DATA.json";
 import Image from "next/image";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { Users } from "@/api/usersAPI";
 import type { User } from "@/api/interface/data.interface";
 import axios, { AxiosResponse } from "axios";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
 
 const ProfileBox = styled.div`
     display: flex;
@@ -53,56 +54,38 @@ const PostingList = styled.ol`
 const PostingListItem = styled.li``;
 
 export default function MyPage() {
-    let [user, setUser] = useState<User[]>([]);
+    const userInfo = useSelector((state: RootState) => state.user.userInfo);
 
-    useEffect(() => {
-        axios
-            .get(`http://10.64.154.163:8080/users`)
-            .then((response) => {
-                setUser(response.data);
-                console.log(response.data);
-            })
+    console.log(userInfo);
+    if (!userInfo) return <h1> 잘못된 접근 입니다. </h1>;
+    else {
+        const USER_NAME = userInfo.name;
 
-            .catch(function (error) {
-                console.log(error);
-            });
-    }, []);
-
-    return (
-        <MainContent>
-            {user.map((item: any, idx) => {
-                return (
-                    <>
-                        <div key={item.id}>
-                            <h1>{item.name}</h1>
-                            <h1>{item.email}</h1>
-                            <h1>{item.password}</h1>
-                        </div>
-                    </>
-                );
-            })}
-            <ProfileBox>
-                <ProfileImg
-                    src={"/images/icons/ProfileBasic.png"}
-                    alt="profile Image"
-                    width={150}
-                    height={150}
-                />
-                <ProfileName>홍길동</ProfileName>
-            </ProfileBox>
-            <MyStudyInfoBox>
-                <MyStudyInfoTitle>My Study Group</MyStudyInfoTitle>
-                <MyStudyInfo>
-                    <MyStudyInfoItem></MyStudyInfoItem>
-                </MyStudyInfo>
-            </MyStudyInfoBox>
-            <LineComponent />
-            <PostingListBox>
-                <PostingListTitle>Posting List</PostingListTitle>
-                <PostingList>
-                    <PostingListItem></PostingListItem>
-                </PostingList>
-            </PostingListBox>
-        </MainContent>
-    );
+        return (
+            <MainContent>
+                <ProfileBox>
+                    <ProfileImg
+                        src={"/images/icons/ProfileBasic.png"}
+                        alt="profile Image"
+                        width={150}
+                        height={150}
+                    />
+                    <ProfileName>{USER_NAME}</ProfileName>
+                </ProfileBox>
+                <MyStudyInfoBox>
+                    <MyStudyInfoTitle>My Study Group</MyStudyInfoTitle>
+                    <MyStudyInfo>
+                        <MyStudyInfoItem></MyStudyInfoItem>
+                    </MyStudyInfo>
+                </MyStudyInfoBox>
+                <LineComponent />
+                <PostingListBox>
+                    <PostingListTitle>Posting List</PostingListTitle>
+                    <PostingList>
+                        <PostingListItem></PostingListItem>
+                    </PostingList>
+                </PostingListBox>
+            </MainContent>
+        );
+    }
 }

@@ -1,7 +1,11 @@
+import { RootState } from "@/store";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "@/store/modules/counter";
 
 const Outer = styled.div`
     display: flex;
@@ -28,6 +32,18 @@ const Button = styled.button`
 
 export default function Header() {
     const router = useRouter();
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        // 로컬 스토리지에서 토큰 제거
+        localStorage.removeItem("token");
+
+        // Redux 스토어에서 로그아웃 액션 디스패치
+        dispatch(logoutUser());
+
+        // 로그아웃 후 원하는 경로로 이동 (예: 로그인 페이지)
+        router.push("/logIn");
+    };
 
     const toWritePostPage = () => {
         router.push("/writePost");
@@ -49,8 +65,8 @@ export default function Header() {
         router.push("/signUp");
     };
 
-    const [isLogIn, setIsLogIn] = useState(true);
-    if (isLogIn) {
+    const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
+    if (isLoggedIn) {
         return (
             <>
                 <Outer>
@@ -63,6 +79,7 @@ export default function Header() {
                     />
                     <ButtonBox>
                         <Button onClick={toWritePostPage}>+ New Post</Button>
+                        <Button onClick={handleLogout}>Log Out</Button>
                         <Img
                             src={"/images/icons/ProfileBasic.png"}
                             alt="Profile"
