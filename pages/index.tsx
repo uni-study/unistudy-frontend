@@ -1,6 +1,7 @@
 import { MainContent } from "@/components/layout/mainContent";
 import { Search } from "@/components/index/Search";
 import { StudyList } from "@/components/index/StudyList";
+import { department, currentState } from "@/types/data";
 
 import styled from "styled-components";
 import { PageNation } from "@/components/index/PageNation";
@@ -16,10 +17,43 @@ const Outer = styled.div`
     margin: 60px 0 60px 0;
     gap: 60px;
 `;
+const Title = styled.h1`
+    color: #545454;
+    font-size: 40px;
+    font-weight: 400;
+`;
+
+const SearchBox = styled.div`
+    display: flex;
+    gap: 260px;
+`;
+
+const Filtering = styled.div`
+    display: flex;
+    gap: 20px;
+`;
+const Select = styled.select`
+    width: 225px;
+    height: 45px;
+    border-radius: 20px;
+    border: 3px solid #e6e6e6;
+    background: #fff;
+`;
+
+const SearchBar = styled.input`
+    width: 300px;
+    height: 45px;
+    border-radius: 30px;
+    border: #fff;
+    background: #efeff1;
+`;
 
 export default function Home() {
     let [postList, setPostlist] = useState<Post[]>([]);
     let [studyGroup, setStudygroup] = useState<StudyGroup[]>([]);
+    const [selectedDepartment, setSelectedDepartment] = useState<number>(0);
+    const [selectedState, setSelectedState] = useState<number>(0);
+
     useEffect(() => {
         axios
             .get(`${API_URL}/posts`)
@@ -43,15 +77,66 @@ export default function Home() {
                 console.log(error);
             });
     }, []);
-    console.log("postlist is ", postList);
-    console.log("studygroup is ", studyGroup);
+
+    const handleDepartmentChange = (
+        e: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+        setSelectedDepartment(Number(e.target.value.substring(0, 1)) - 1);
+    };
+
+    const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedState(Number(e.target.value.substring(0, 1)) - 1);
+    };
+
+    console.log("selectedDepartment", selectedDepartment);
+    console.log("selectedState", selectedState);
+
+    const filteredStudyGroup = studyGroup.filter((group) => {
+        console.log("group department", group.department);
+        console.log("group currentState", group.currentState);
+        return (
+            group.department === selectedDepartment ||
+            group.currentState === selectedState
+        );
+    });
+
+    console.log("filteredStudyGroup", filteredStudyGroup);
+
     return (
         <>
             <MainContent>
                 <Outer>
-                    <Search />
-                    {}
-                    <StudyList postList={postList} studyGroup={studyGroup} />
+                    <Title>Study Group</Title>
+                    <SearchBox>
+                        <Filtering>
+                            <Select onChange={handleDepartmentChange}>
+                                {department.map((e, i) => {
+                                    return (
+                                        <option value={e} key={i}>
+                                            {" "}
+                                            {e}{" "}
+                                        </option>
+                                    );
+                                })}
+                            </Select>
+                            <Select onChange={handleStateChange}>
+                                {currentState.map((e, i) => {
+                                    return (
+                                        <option value={e} key={i}>
+                                            {" "}
+                                            {e}{" "}
+                                        </option>
+                                    );
+                                })}
+                            </Select>
+                        </Filtering>
+                        <SearchBar></SearchBar>
+                    </SearchBox>
+
+                    <StudyList
+                        postList={postList}
+                        studyGroup={filteredStudyGroup}
+                    />
                     <PageNation />
                 </Outer>
             </MainContent>

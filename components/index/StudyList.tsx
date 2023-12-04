@@ -120,13 +120,7 @@ export function StudyList({
                         );
 
                     if (!currentStudyGroupInfo) {
-                        return (
-                            <>
-                                <ContentBox>
-                                    <h1>스터디를 찾을 수 없습니다.</h1>
-                                </ContentBox>
-                            </>
-                        );
+                        return <></>;
                     } else {
                         const deadline = new Date(
                             currentStudyGroupInfo.recruitmentDeadline

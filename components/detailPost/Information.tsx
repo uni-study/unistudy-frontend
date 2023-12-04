@@ -8,7 +8,6 @@ import {
     studyMethod,
     studyPeriod,
     numOfPeople,
-    currentState,
 } from "@/types/data";
 
 type PROPS_TYPE = {

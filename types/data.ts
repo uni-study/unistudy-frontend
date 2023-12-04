@@ -47,8 +47,4 @@ export const studyPeriod: string[] = [
     "7: 6 months",
 ];
 
-export const currentState: string[] = [
-    "1: Recruiting",
-    "2: In progress",
-    "3: Finished",
-];
+export const currentState: string[] = ["1: Recruiting", "2: Finished"];

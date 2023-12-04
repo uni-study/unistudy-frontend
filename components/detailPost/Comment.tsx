@@ -32,10 +32,18 @@ const CommentList = styled.ul`
     align-items: flex-start;
     gap: 30px;
 `;
-const CommentItem = styled.li`
+
+const OneComment = styled.div`
+    display: flex;
     width: 100%;
+    flex-direction: row;
+    align-items: center;
+`;
+const CommentItem = styled.li`
+    width: 90%;
     display: flex;
     padding: 10px 0px;
+    margin-right: 20px;
     flex-direction: column;
     align-items: flex-start;
 `;
@@ -139,6 +147,18 @@ export default function Comment() {
         });
     };
 
+    const handleDelete = (cid: number) => {
+        axios
+            .delete(`${API_URL}/comment/${cid}`)
+            .then((response) => {
+                console.log("Delete request successful:", response.data);
+            })
+            .catch((error) => {
+                console.error("Error deleting data:", error);
+            });
+        alert("게시글이 삭제되었습니다.");
+    };
+
     const handleClick = () => {
         axios
             .post(`${API_URL}/comment`, newComment)
@@ -157,24 +177,33 @@ export default function Comment() {
                     <CommentNumber>0</CommentNumber>
                 </CommentTitle>
                 <CommentList>
-                    {comment.map((item: any) => {
+                    {comment.map((item: any, idx) => {
                         const postTime = new Date(item.postedAt)
                             .toISOString()
                             .substring(0, 10);
                         return (
-                            <CommentItem key={item.id}>
-                                <CommentItemBox>
-                                    <CommentItemUser>
-                                        {curUserInfo?.name}
-                                    </CommentItemUser>
-                                    <CommentItemDate>
-                                        {postTime}
-                                    </CommentItemDate>
-                                </CommentItemBox>
-                                <CommentItemText>
-                                    {item.mainText}
-                                </CommentItemText>
-                            </CommentItem>
+                            <OneComment key={idx}>
+                                <CommentItem key={item.id}>
+                                    <CommentItemBox>
+                                        <CommentItemUser>
+                                            {curUserInfo?.name}
+                                        </CommentItemUser>
+                                        <CommentItemDate>
+                                            {postTime}
+                                        </CommentItemDate>
+                                    </CommentItemBox>
+                                    <CommentItemText>
+                                        {item.mainText}
+                                    </CommentItemText>
+                                </CommentItem>
+                                <CommentButton
+                                    onClick={() => {
+                                        handleDelete(item.id);
+                                    }}
+                                >
+                                    Delete
+                                </CommentButton>
+                            </OneComment>
                         );
                     })}
                 </CommentList>

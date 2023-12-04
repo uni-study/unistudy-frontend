@@ -87,6 +87,10 @@ export default function MyPage() {
     console.log("userPosts: ", userPosts);
     console.log("userStudyGroups: ", userStudyGroups);
 
+    const handleMoveToSG = (sgid: number) => {
+        router.push(`/myPage/${sgid}`);
+    };
+
     const handleMoveToPost = (pid: number) => {
         router.push(`/detailPost/${pid}`);
     };
@@ -110,7 +114,10 @@ export default function MyPage() {
                     <MyStudyInfoTitle>My Study Group</MyStudyInfoTitle>
                     <MyStudyInfo>
                         {userStudyGroups?.map((studyGroup) => (
-                            <MyStudyInfoItem key={studyGroup.id}>
+                            <MyStudyInfoItem
+                                key={studyGroup.id}
+                                onClick={() => handleMoveToSG(studyGroup.id)}
+                            >
                                 {studyGroup.name}
                             </MyStudyInfoItem>
                         ))}
