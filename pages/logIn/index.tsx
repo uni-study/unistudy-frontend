@@ -89,7 +89,7 @@ export default function LogIn() {
                 dispatch(setUserInfo(foundUser));
                 router.push("/"); // 로그인 성공 시 이동할 페이지로 경로 지정 ('/dashboard'는 예시 경로)
             } else {
-                console.log("이메일 또는 비밀번호가 일치하지 않습니다.");
+                alert("이메일 또는 비밀번호가 일치하지 않습니다.");
             }
         } catch (error) {
             console.error("로그인 에러:", error);

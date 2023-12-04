@@ -138,7 +138,7 @@ export default function Comment() {
             .catch((err) => {
                 "Error";
             });
-    });
+    }, [newComment]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewComment({
@@ -156,7 +156,7 @@ export default function Comment() {
             .catch((error) => {
                 console.error("Error deleting data:", error);
             });
-        alert("게시글이 삭제되었습니다.");
+        alert("댓글이 삭제되었습니다.");
     };
 
     const handleClick = () => {

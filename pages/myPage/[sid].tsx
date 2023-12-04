@@ -1,5 +1,5 @@
 import { API_URL } from "@/api/commonAPI";
-import { StudyGroup } from "@/api/interface/data.interface";
+import { Member, StudyGroup } from "@/api/interface/data.interface";
 import LineComponent from "@/components/common/LineComponent";
 import { MainContent } from "@/components/layout/mainContent";
 import { RootState } from "@/store";
@@ -42,6 +42,53 @@ const Writer = styled.div`
     justify-content: center;
     color: #4e4e4e;
     font-size: 30px;
+    font-weight: 600;
+`;
+
+const CurMemberBox = styled.div`
+    display: flex;
+    width: 100%;
+    height: 500px;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 30px 0px;
+    flex-wrap: wrap;
+`;
+const CurMemberTitle = styled.h1`
+    display: flex;
+    width: 100%;
+    height: 45px;
+    flex-direction: column;
+    justify-content: center;
+    color: #4e4e4e;
+    font-size: 30px;
+    font-weight: 600;
+`;
+
+const CurMemberList = styled.ul`
+    width: 100%;
+`;
+const CurMemberOnelist = styled.li`
+    width: 100%;
+    height: 68px;
+    display: flex;
+    padding: 15px 19px;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #9d9d9d;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 40px;
+    border: 3px solid #e6e6e6;
+    background: #fff;
+`;
+const CurMemberName = styled.div`
+    width: 70%;
+    height: 100%;
+    color: #9d9d9d;
+    font-size: 20px;
     font-weight: 600;
 `;
 
@@ -152,9 +199,13 @@ const ModifyBtn = styled.button`
 export default function Applicant() {
     const userInfo = useSelector((state: RootState) => state.user.userInfo);
     const router = useRouter();
-    const { sid } = router.query;
+    const sid = Number(router.query.sid);
     const [studyGroup, setStudyGroup] = useState<StudyGroup>();
     const [newState, setNewState] = useState("");
+    const [member, setMember] = useState<Member[]>([]);
+    let participantName = "";
+
+    console.log("sid", sid);
 
     useEffect(() => {
         axios
@@ -163,9 +214,36 @@ export default function Applicant() {
                 setStudyGroup(response.data);
             })
             .catch((error) => {
-                console.error("Error getting data:", error);
+                console.error("Error getting studygroup data:", error);
             });
     }, []);
+
+    useEffect(() => {
+        axios
+            .get(`${API_URL}/studygroup-member-list/${sid}`)
+            .then((response) => {
+                setMember(response.data);
+                console.log("member", member);
+            })
+            .catch((error) => {
+                console.error("Error getting member data:", error);
+            });
+    }, []);
+
+    const handleAccept = (participant: Member) => {
+        axios
+            .put(`${API_URL}/studygroup-member/${participant.id}`, {
+                ...participant,
+                accepted: true,
+            })
+            .then((response) => {
+                alert("Accepted successfully!");
+                router.push("/myPage");
+            })
+            .catch((error) => {
+                console.error("Error accepting participant:", error);
+            });
+    };
 
     let TSdeadline = "";
     if (studyGroup) {
@@ -195,7 +273,7 @@ export default function Applicant() {
             });
     };
 
-    if (!studyGroup) {
+    if (!studyGroup || !member) {
         return (
             <>
                 <MainContent>
@@ -211,19 +289,61 @@ export default function Applicant() {
                         <Title>{studyGroup?.name}</Title>
                         <Writer>{userInfo?.name}</Writer>
                     </TitleBox>
-                    <LineComponent />
-                    <ApplicantBox>
-                        <ApplicantTitle>Applicant List</ApplicantTitle>
-                        <ApplicantList>
-                            <Onelist>
-                                <ApplicantName></ApplicantName>
-                                <ButtonBox>
-                                    <AcceptBtn>Accept</AcceptBtn>
-                                    <RefuseBtn>Refuse</RefuseBtn>
-                                </ButtonBox>
-                            </Onelist>
-                        </ApplicantList>
-                    </ApplicantBox>
+
+                    {member.map((item, i) => {
+                        if (item.accepted) {
+                            return (
+                                <>
+                                    <LineComponent />
+                                    <CurMemberBox>
+                                        <CurMemberTitle>
+                                            Current Member
+                                        </CurMemberTitle>
+
+                                        <CurMemberList>
+                                            <Onelist key={i}>
+                                                <CurMemberName>
+                                                    {participantName}
+                                                </CurMemberName>
+                                            </Onelist>
+                                        </CurMemberList>
+                                    </CurMemberBox>
+                                </>
+                            );
+                        } else {
+                            return (
+                                <>
+                                    <LineComponent />
+                                    <ApplicantBox>
+                                        <ApplicantTitle>
+                                            Applicant List
+                                        </ApplicantTitle>
+                                        <ApplicantList>
+                                            <Onelist key={i}>
+                                                <ApplicantName>
+                                                    {participantName}
+                                                </ApplicantName>
+                                                <ButtonBox>
+                                                    <AcceptBtn
+                                                        onClick={() => {
+                                                            handleAccept(item);
+                                                        }}
+                                                    >
+                                                        Accept
+                                                    </AcceptBtn>
+                                                    <RefuseBtn>
+                                                        Refuse
+                                                    </RefuseBtn>
+                                                </ButtonBox>
+                                            </Onelist>
+                                        </ApplicantList>
+                                    </ApplicantBox>
+                                    ;
+                                </>
+                            );
+                        }
+                    })}
+
                     <LineComponent />
                     <Outer>
                         <CurrentStateBox>

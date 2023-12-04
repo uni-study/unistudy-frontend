@@ -5,6 +5,8 @@ import styled from "styled-components";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { Member, Post, StudyGroup } from "@/api/interface/data.interface";
+import { set } from "immer/dist/internal.js";
 
 const Outer = styled.div`
     display: flex;
@@ -22,17 +24,41 @@ const Button = styled.button`
     font-weight: 600;
 `;
 
+interface MemberInterface {
+    userId?: number;
+    studygroupId?: number;
+    joinedDate: string;
+    accepted: boolean;
+}
+
 export default function PorDBtn() {
+    const today = new Date();
+    const dateString =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+
     const router = useRouter();
     const currentPID = router.query.pid;
     const curUserInfo = useSelector((state: RootState) => state.user.userInfo);
+
+    const [curPost, setCurPost] = useState<Post>();
     let [writerId, setWriterId] = useState<number>(0);
+    let [member, setMember] = useState<MemberInterface>({
+        userId: curUserInfo?.id,
+        studygroupId: curPost?.studygroupId,
+        joinedDate: dateString,
+        accepted: false,
+    });
 
     useEffect(() => {
         axios
             .get(`${API_URL}/post/${currentPID}`)
             .then((response) => {
                 console.log("Get request successful:", response.data);
+                setCurPost(response.data);
                 setWriterId(response.data.writerId);
             })
             .catch((error) => {
@@ -53,21 +79,54 @@ export default function PorDBtn() {
         router.push("/");
     };
 
-    if (writerId == curUserInfo?.id) {
+    const handleParticipate = (uid: number, sid: number) => {
+        axios
+            .post(`${API_URL}/join/study-group/${sid}/member/${uid}`, member)
+            .then((response) => {
+                alert(
+                    "Participate successfully! Wait for the leader's approval."
+                );
+            })
+            .catch((error) => {
+                console.error("Error posting data:", error);
+            });
+    };
+
+    if (curUserInfo && curPost) {
+        if (writerId == curUserInfo?.id) {
+            return (
+                <>
+                    <Outer>
+                        <Button onClick={handleDelete}>Delete</Button>
+                    </Outer>
+                </>
+            );
+        } else {
+            return (
+                <>
+                    {}
+                    <Outer>
+                        <Button
+                            onClick={() => {
+                                handleParticipate(
+                                    curUserInfo.id,
+                                    curPost.studygroupId
+                                );
+                            }}
+                        >
+                            Participate
+                        </Button>
+                    </Outer>
+                </>
+            );
+        }
+    } else {
         return (
             <>
                 <Outer>
-                    <Button onClick={handleDelete}>Delete</Button>
+                    <h1> 잘못된 접근입니다. </h1>
                 </Outer>
             </>
         );
-    } else {
-        //return (
-        //    <>{}
-        //        <Outer>
-        //            <Button>Participate</Button>
-        //        </Outer>
-        //    </>
-        //);
     }
 }

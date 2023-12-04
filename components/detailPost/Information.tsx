@@ -72,7 +72,7 @@ export default function Information(props: PROPS_TYPE) {
                     <InfoItem>
                         <InfoName>Department</InfoName>
                         <InfoData>
-                            {department[currentSG.department - 1].substring(3)}
+                            {department[currentSG.department].substring(3)}
                         </InfoData>
                     </InfoItem>
                     <InfoItem>
@@ -84,17 +84,13 @@ export default function Information(props: PROPS_TYPE) {
                     <InfoItem>
                         <InfoName>StudyMethod</InfoName>
                         <InfoData>
-                            {studyMethod[currentSG.studyMethod - 1].substring(
-                                3
-                            )}
+                            {studyMethod[currentSG.studyMethod].substring(3)}
                         </InfoData>
                     </InfoItem>
                     <InfoItem>
                         <InfoName>StudyPeriod</InfoName>
                         <InfoData>
-                            {studyPeriod[currentSG.studyPeriod - 1].substring(
-                                3
-                            )}
+                            {studyPeriod[currentSG.studyPeriod].substring(3)}
                         </InfoData>
                     </InfoItem>
                     <InfoItem>

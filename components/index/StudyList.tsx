@@ -127,6 +127,12 @@ export function StudyList({
                         )
                             .toISOString()
                             .substring(0, 10);
+
+                        console.log(
+                            "what is it",
+                            currentStudyGroupInfo.department - 1,
+                            department[currentStudyGroupInfo.department - 1]
+                        );
                         return (
                             <ContentBox
                                 key={i}
@@ -146,13 +152,12 @@ export function StudyList({
                                 <InfoBox>
                                     <Info>
                                         {department[
-                                            currentStudyGroupInfo.department - 1
+                                            currentStudyGroupInfo.department
                                         ].substring(3)}
                                     </Info>
                                     <Info>
                                         {studyMethod[
-                                            currentStudyGroupInfo.studyMethod -
-                                                1
+                                            currentStudyGroupInfo.studyMethod
                                         ].substring(3)}
                                     </Info>
                                 </InfoBox>

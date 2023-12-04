@@ -1,23 +1,24 @@
 export const department: string[] = [
-    "1: All",
-    "2: ME",
-    "3: CUEEn",
-    "4: MSE",
-    "5: ECE",
-    "6: NE",
-    "7: Design",
-    "8: BME",
-    "9: IE",
-    "10: BS",
-    "11: EE",
-    "12: CSE",
-    "13: Physics",
-    "14: MS",
-    "15: Chemistry",
-    "16: Business",
+    "0: All",
+    "1: ME",
+    "2: CUEEn",
+    "3: MSE",
+    "4: ECE",
+    "5: NE",
+    "6: Design",
+    "7: BME",
+    "8: IE",
+    "9: BS",
+    "10: EE",
+    "11: CSE",
+    "12: Physics",
+    "13: MS",
+    "14: Chemistry",
+    "15: Business",
 ];
 
 export const studyMethod: string[] = [
+    "0: Not Decided",
     "1: Online",
     "2: Offline",
     "3: On+Offline",
@@ -38,13 +39,13 @@ export const numOfPeople: string[] = [
 ];
 
 export const studyPeriod: string[] = [
-    "1: Not Decided",
-    "2: 1 month",
-    "3: 2 months",
-    "4: 3 months",
-    "5: 4 months",
-    "6: 5 months",
-    "7: 6 months",
+    "0: Not Decided",
+    "1: 1 month",
+    "2: 2 months",
+    "3: 3 months",
+    "4: 4 months",
+    "5: 5 months",
+    "6: 6 months",
 ];
 
 export const currentState: string[] = ["1: Recruiting", "2: Finished"];

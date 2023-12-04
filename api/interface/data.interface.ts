@@ -38,10 +38,10 @@ export interface Comment {
     postedAt: string;
 }
 
-export interface LOGED_INFO_INTERFACE {
-    logged: boolean;
+export interface Member {
     id: number;
-    password: string;
-    name: string;
-    email: string;
+    userId: number;
+    studygroupId: number;
+    joinedDate: string;
+    accepted: boolean;
 }
