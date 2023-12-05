@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Post, StudyGroup } from "@/api/interface/data.interface";
 import { API_URL } from "@/api/commonAPI";
+import { useRouter } from "next/router";
 
 const Outer = styled.div`
     display: flex;
@@ -53,6 +54,9 @@ export default function Home() {
     let [studyGroup, setStudygroup] = useState<StudyGroup[]>([]);
     const [selectedDepartment, setSelectedDepartment] = useState<number>(0);
     const [selectedState, setSelectedState] = useState<number>(0);
+    const [searchWord, setSearchWord] = useState<string>("");
+    const [filteredPostList, setFilteredPostList] = useState<Post[]>(postList);
+    const router = useRouter();
 
     useEffect(() => {
         axios
@@ -81,12 +85,31 @@ export default function Home() {
     const handleDepartmentChange = (
         e: React.ChangeEvent<HTMLSelectElement>
     ) => {
-        setSelectedDepartment(Number(e.target.value.substring(0, 1)) - 1);
+        setSelectedDepartment(Number(e.target.value.substring(0, 1)));
     };
 
     const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedState(Number(e.target.value.substring(0, 1)) - 1);
+        setSelectedState(Number(e.target.value.substring(0, 1)));
     };
+
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchWord(e.target.value);
+    };
+
+    const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key == "Enter") {
+            const filtered = postList.filter((post) => {
+                console.log("is it included?", post.title.includes(searchWord));
+                return (
+                    post.title.includes(searchWord) ||
+                    post.mainText.includes(searchWord)
+                );
+            });
+            setFilteredPostList(filtered);
+        }
+    };
+
+    console.log("filteredPostlist", filteredPostList);
 
     console.log("selectedDepartment", selectedDepartment);
     console.log("selectedState", selectedState);
@@ -94,10 +117,14 @@ export default function Home() {
     const filteredStudyGroup = studyGroup.filter((group) => {
         console.log("group department", group.department);
         console.log("group currentState", group.currentState);
-        return (
-            group.department === selectedDepartment ||
-            group.currentState === selectedState
-        );
+        if (selectedDepartment === 0 || selectedState === 3) {
+            return group;
+        } else {
+            return (
+                group.department === selectedDepartment ||
+                group.currentState === selectedState
+            );
+        }
     });
 
     console.log("filteredStudyGroup", filteredStudyGroup);
@@ -114,7 +141,7 @@ export default function Home() {
                                     return (
                                         <option value={e} key={i}>
                                             {" "}
-                                            {e}{" "}
+                                            {e.substring(3)}{" "}
                                         </option>
                                     );
                                 })}
@@ -124,17 +151,20 @@ export default function Home() {
                                     return (
                                         <option value={e} key={i}>
                                             {" "}
-                                            {e}{" "}
+                                            {e.substring(3)}{" "}
                                         </option>
                                     );
                                 })}
                             </Select>
                         </Filtering>
-                        <SearchBar></SearchBar>
+                        <SearchBar
+                            onChange={handleSearch}
+                            onKeyDown={handleOnKeyDown}
+                        ></SearchBar>
                     </SearchBox>
 
                     <StudyList
-                        postList={postList}
+                        postList={filteredPostList}
                         studyGroup={filteredStudyGroup}
                     />
                     <PageNation />

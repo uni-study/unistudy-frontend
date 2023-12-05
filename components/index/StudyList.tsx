@@ -128,11 +128,6 @@ export function StudyList({
                             .toISOString()
                             .substring(0, 10);
 
-                        console.log(
-                            "what is it",
-                            currentStudyGroupInfo.department - 1,
-                            department[currentStudyGroupInfo.department - 1]
-                        );
                         return (
                             <ContentBox
                                 key={i}

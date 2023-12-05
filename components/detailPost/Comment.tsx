@@ -119,6 +119,7 @@ interface CommentInterface {
 export default function Comment() {
     const router = useRouter();
     const curUserInfo = useSelector((state: RootState) => state.user.userInfo);
+    const [inputComment, setInputComment] = useState<string>("");
     let [newComment, setNewComment] = useState<CommentInterface>({
         postId: Number(router.query.pid),
         writerId: curUserInfo?.id,
@@ -145,6 +146,7 @@ export default function Comment() {
             ...newComment,
             mainText: e.target.value,
         });
+        setInputComment(e.target.value);
     };
 
     const handleDelete = (cid: number) => {
@@ -157,6 +159,7 @@ export default function Comment() {
                 console.error("Error deleting data:", error);
             });
         alert("댓글이 삭제되었습니다.");
+        router.reload();
     };
 
     const handleClick = () => {
@@ -164,6 +167,9 @@ export default function Comment() {
             .post(`${API_URL}/comment`, newComment)
             .then((res) => {
                 console.log(res);
+                alert("New comment added!");
+                setInputComment("");
+                router.reload();
             })
             .catch((err) => {
                 console.log(err);
@@ -210,6 +216,7 @@ export default function Comment() {
                 <CommentBox>
                     <CommentInput
                         placeholder="Add a Comment"
+                        value={inputComment}
                         onChange={(e) => handleInputChange(e)}
                     />
                     <CommentButton onClick={handleClick}>Apply</CommentButton>

@@ -95,6 +95,7 @@ export default function LogIn() {
             console.error("로그인 에러:", error);
         }
     };
+
     return (
         <>
             <MainContent>

@@ -55,9 +55,10 @@ export default function PostingBtn() {
                     // 에러 처리
                 });
 
+            alert("New post is created!");
             router.push("/");
         } else {
-            alert("데이터가 입력되지 않았습니다.");
+            alert("Please fill out all the blanks!");
         }
     };
     return (
