@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "..";
 
 interface UserData {
     id: number;
@@ -35,4 +36,5 @@ const userSlice = createSlice({
 
 export const { setIsLoggedIn, setUserInfo, logoutUser } = userSlice.actions; //액션 생성함수
 
+export const selectUserInfo = (state: RootState) => state.user.userInfo;
 export default userSlice.reducer; //리듀서

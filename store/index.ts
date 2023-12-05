@@ -1,8 +1,14 @@
-// store.js
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./modules/user";
 import stepOneReducer from "./modules/post_stepOne";
 import stepTwoReducer from "./modules/post_stepTwo";
+import { ThunkAction } from "redux-thunk";
+
+const rootReducer = {
+    user: userReducer,
+    stepOne: stepOneReducer,
+    stepTwo: stepTwoReducer,
+};
 
 const loadState = () => {
     try {
@@ -25,11 +31,7 @@ const loadState = () => {
 const initialState = loadState();
 
 export const store = configureStore({
-    reducer: {
-        user: userReducer,
-        stepOne: stepOneReducer,
-        stepTwo: stepTwoReducer,
-    },
+    reducer: rootReducer,
     preloadedState: initialState,
 });
 

@@ -1,5 +1,5 @@
 export const department: string[] = [
-    "0: All",
+    "0: All Departments",
     "1: ME",
     "2: CUEEn",
     "3: MSE",
@@ -48,4 +48,8 @@ export const studyPeriod: string[] = [
     "6: 6 months",
 ];
 
-export const currentState: string[] = ["1: Recruiting", "2: Finished"];
+export const currentState: string[] = [
+    "0: Recruiting",
+    "1: Finished",
+    "2: All",
+];

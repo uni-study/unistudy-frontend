@@ -61,6 +61,8 @@ export default function StepTwo() {
     const USER_ID = curUserInfo?.id;
     const [curStudyGroupId, setCurStudyGroup] = useState<number>(0);
 
+    const date = new Date();
+
     if (curUserInfo) {
         axios
             .get(`${API_URL}/study-groups?leaderId=${USER_ID}`)
@@ -95,9 +97,9 @@ export default function StepTwo() {
         studygroupId: 0,
         title: "", //제목
         mainText: "", //본문
-        postedAt: "2020-01-20T15:45:00",
-        updatedAt: "2020-01-20T15:45:00",
-        expiredAt: "2020-01-20T15:45:00",
+        postedAt: date.toISOString().substring(0, 19),
+        updatedAt: date.toISOString().substring(0, 19),
+        expiredAt: date.toISOString().substring(0, 19),
     });
 
     useEffect(() => {

@@ -51,7 +51,6 @@ const CurMemberBox = styled.div`
     height: 500px;
     align-items: flex-start;
     align-content: flex-start;
-    gap: 30px 0px;
     flex-wrap: wrap;
 `;
 const CurMemberTitle = styled.h1`
@@ -67,16 +66,15 @@ const CurMemberTitle = styled.h1`
 
 const CurMemberList = styled.ul`
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
 `;
 const CurMemberOnelist = styled.li`
+    list-style: none;
     width: 100%;
     height: 68px;
-    display: flex;
-    padding: 15px 19px;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
-    flex-shrink: 0;
     color: #9d9d9d;
     font-size: 20px;
     font-weight: 600;
@@ -85,8 +83,9 @@ const CurMemberOnelist = styled.li`
     background: #fff;
 `;
 const CurMemberName = styled.div`
-    width: 70%;
-    height: 100%;
+    width: 100%;
+    height: 50%;
+    padding: 25px 0px 20px 30px;
     color: #9d9d9d;
     font-size: 20px;
     font-weight: 600;
@@ -98,7 +97,6 @@ const ApplicantBox = styled.div`
     height: 500px;
     align-items: flex-start;
     align-content: flex-start;
-    gap: 30px 0px;
     flex-wrap: wrap;
 `;
 const ApplicantTitle = styled.h1`
@@ -115,6 +113,7 @@ const ApplicantList = styled.ul`
     width: 100%;
 `;
 const Onelist = styled.li`
+    list-style: none;
     width: 100%;
     height: 68px;
     display: flex;
@@ -132,7 +131,8 @@ const Onelist = styled.li`
 `;
 const ApplicantName = styled.div`
     width: 70%;
-    height: 100%;
+    height: 50%;
+    padding: 30px 0px 20px 30px;
     color: #9d9d9d;
     font-size: 20px;
     font-weight: 600;
@@ -199,17 +199,15 @@ const ModifyBtn = styled.button`
 export default function Applicant() {
     const userInfo = useSelector((state: RootState) => state.user.userInfo);
     const router = useRouter();
-    const sid = Number(router.query.sid);
+    const SG_ID = router.query.sid;
     const [studyGroup, setStudyGroup] = useState<StudyGroup>();
     const [newState, setNewState] = useState("");
     const [member, setMember] = useState<Member[]>([]);
-    let participantName = "";
-
-    console.log("sid", sid);
+    let participantName = "test";
 
     useEffect(() => {
         axios
-            .get(`${API_URL}/study-groups/${sid}`)
+            .get(`${API_URL}/study-groups/${SG_ID}`)
             .then((response) => {
                 setStudyGroup(response.data);
             })
@@ -220,7 +218,7 @@ export default function Applicant() {
 
     useEffect(() => {
         axios
-            .get(`${API_URL}/studygroup-member-list/${sid}`)
+            .get(`${API_URL}/studygroup-member-list/${SG_ID}`)
             .then((response) => {
                 setMember(response.data);
                 console.log("member", member);
@@ -257,7 +255,7 @@ export default function Applicant() {
     const handleModify = () => {
         // 서버로 변경된 currentState 값을 보내는 PUT 요청을 보내는 코드
         axios
-            .put(`${API_URL}/study-groups/${sid}`, {
+            .put(`${API_URL}/study-groups/${SG_ID}`, {
                 ...studyGroup,
                 currentState: Number(newState.substring(0, 1)),
                 recruitmentDeadline: TSdeadline, // 수정된 currentState 값 전송
@@ -301,11 +299,11 @@ export default function Applicant() {
                                         </CurMemberTitle>
 
                                         <CurMemberList>
-                                            <Onelist key={i}>
+                                            <CurMemberOnelist key={i}>
                                                 <CurMemberName>
                                                     {participantName}
                                                 </CurMemberName>
-                                            </Onelist>
+                                            </CurMemberOnelist>
                                         </CurMemberList>
                                     </CurMemberBox>
                                 </>
