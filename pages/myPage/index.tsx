@@ -65,11 +65,10 @@ export default function MyPage() {
         axios
             .get(`${API_URL}/posts?writerId=${currentUID}`)
             .then((response) => {
-                console.log(response.data);
                 setUserPosts(response.data);
             })
             .catch((error) => {
-                console.error(error);
+                console.error("Cannot find post", error);
             });
     }, []);
 
@@ -77,16 +76,12 @@ export default function MyPage() {
         axios
             .get(`${API_URL}/study-groups?leaderId=${currentUID}`)
             .then((response) => {
-                console.log(response.data);
                 setUserStudyGroups(response.data);
             })
             .catch((error) => {
-                console.error(error);
+                console.error("Cannot find studygorups", error);
             });
     }, []);
-
-    console.log("userPosts: ", userPosts);
-    console.log("userStudyGroups: ", userStudyGroups);
 
     const handleMoveToSG = (sgid: number) => {
         router.push(`/myPage/${sgid}`);
@@ -96,7 +91,13 @@ export default function MyPage() {
         router.push(`/detailPost/${pid}`);
     };
 
-    if (!userInfo) return <h1> 잘못된 접근 입니다. </h1>;
+    if (!userInfo)
+        return (
+            <MainContent>
+                <h1> Wrong Access </h1>
+                <h2> Please check if you are logged in. </h2>
+            </MainContent>
+        );
     else {
         const USER_NAME = userInfo.name;
 

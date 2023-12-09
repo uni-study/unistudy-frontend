@@ -57,7 +57,6 @@ export default function PorDBtn() {
         axios
             .get(`${API_URL}/post/${currentPID}`)
             .then((response) => {
-                console.log("Get request successful:", response.data);
                 setCurPost(response.data);
                 setWriterId(response.data.writerId);
             })
@@ -70,13 +69,12 @@ export default function PorDBtn() {
         axios
             .delete(`${API_URL}/post/${currentPID}`)
             .then((response) => {
-                console.log("Delete request successful:", response.data);
+                alert("게시글이 삭제되었습니다.");
+                router.push("/");
             })
             .catch((error) => {
                 console.error("Error deleting data:", error);
             });
-        alert("게시글이 삭제되었습니다.");
-        router.push("/");
     };
 
     const handleParticipate = (uid: number, sid: number) => {

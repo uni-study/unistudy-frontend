@@ -133,11 +133,10 @@ export default function Comment() {
         axios
             .get(`${API_URL}/comments`)
             .then((res) => {
-                console.log("Get comment response", res);
                 setComment(res.data);
             })
-            .catch((err) => {
-                "Error";
+            .catch((error) => {
+                console.log("GET comments failed", error);
             });
     }, [newComment]);
 
@@ -153,23 +152,21 @@ export default function Comment() {
         axios
             .delete(`${API_URL}/comment/${cid}`)
             .then((response) => {
-                console.log("Delete request successful:", response.data);
+                alert("댓글이 삭제되었습니다.");
+                router.push(`/detailPost/${router.query.pid}`);
             })
             .catch((error) => {
                 console.error("Error deleting data:", error);
             });
-        alert("댓글이 삭제되었습니다.");
-        router.reload();
     };
 
     const handleClick = () => {
         axios
             .post(`${API_URL}/comment`, newComment)
             .then((res) => {
-                console.log(res);
                 alert("New comment added!");
                 setInputComment("");
-                router.reload();
+                router.push(`/detailPost/${router.query.pid}`);
             })
             .catch((err) => {
                 console.log(err);

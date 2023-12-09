@@ -52,9 +52,7 @@ const SearchBar = styled.input`
     background: #efeff1;
 `;
 
-export default function Home({ userInfo }: { userInfo: any }) {
-    console.log("userInfo:", userInfo);
-
+export default function Home() {
     let [postList, setPostlist] = useState<Post[]>([]);
     let [studyGroup, setStudygroup] = useState<StudyGroup[]>([]);
     const [selectedDepartment, setSelectedDepartment] = useState<number>(0);
