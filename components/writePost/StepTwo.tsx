@@ -67,8 +67,6 @@ export default function StepTwo() {
         axios
             .get(`${API_URL}/study-groups?leaderId=${USER_ID}`)
             .then((response) => {
-                console.log("response here ", response.data);
-                console.log("curStepOne here ", curStepOne);
                 const res = response.data;
                 res.forEach((item: any) => {
                     if (
@@ -129,16 +127,11 @@ export default function StepTwo() {
             ...prevData,
             [field]: contents,
         }));
-
-        console.log("contents is ", contents);
     };
 
     useEffect(() => {
         dispatch(setStepTwoData(userTwoData));
     }, [userTwoData, dispatch]);
-
-    console.log("userTwodata is ", userTwoData);
-
     return (
         <>
             <StepTwoBox>

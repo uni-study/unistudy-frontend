@@ -46,8 +46,6 @@ export default function PostingBtn() {
             axios
                 .post(`${API_URL}/post`, postData)
                 .then((response) => {
-                    console.log(postData);
-                    console.log("Post request successful:", response.data);
                     // 성공 시 필요한 작업 수행
                 })
                 .catch((error) => {
