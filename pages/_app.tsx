@@ -4,8 +4,11 @@ import { GlobalStyles } from "@/styles/GlobalStyles";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import { store } from "@/store";
+import { useRouter } from "next/router";
 
-export default function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
+    const router = useRouter();
+
     return (
         <>
             <Provider store={store}>
@@ -17,3 +20,5 @@ export default function App({ Component, pageProps }: AppProps) {
         </>
     );
 }
+
+export default App;

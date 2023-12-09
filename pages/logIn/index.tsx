@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { setIsLoggedIn, setUserInfo } from "@/store/modules/user";
+import { error } from "console";
 
 const TotalBox = styled.div`
     display: flex;
@@ -81,20 +82,15 @@ export default function LogIn() {
 
     const handleLogIn = async () => {
         try {
-            const response = await axios.get(`${API_URL}/users`);
-
-            const users = response.data;
-
-            // 이메일로 사용자 정보 찾기
-            const foundUser = users.find((user: any) => user.email === email);
-
-            if (foundUser && foundUser.pw === password) {
-                console.log("로그인 성공");
+            // POST /login API 호출
+            const response = await axios.post(`${API_URL}/login`, {
+                email: email,
+                pw: password,
+            });
+            if (response.status === 200) {
                 dispatch(setIsLoggedIn(true));
-                dispatch(setUserInfo(foundUser));
-                router.push("/"); // 로그인 성공 시 이동할 페이지로 경로 지정 ('/dashboard'는 예시 경로)
-            } else {
-                alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+                dispatch(setUserInfo(response.data));
+                router.push("/");
             }
         } catch (error) {
             console.error("로그인 에러:", error);

@@ -2,6 +2,9 @@ import { MainContent } from "@/components/layout/mainContent";
 import { Search } from "@/components/index/Search";
 import { StudyList } from "@/components/index/StudyList";
 import { department, currentState } from "@/types/data";
+import { GetServerSideProps } from "next";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
 
 import styled from "styled-components";
 import { PageNation } from "@/components/index/PageNation";
@@ -50,7 +53,9 @@ const SearchBar = styled.input`
     background: #efeff1;
 `;
 
-export default function Home() {
+export default function Home({ userInfo }: { userInfo: any }) {
+    console.log("userInfo:", userInfo);
+
     let [postList, setPostlist] = useState<Post[]>([]);
     let [studyGroup, setStudygroup] = useState<StudyGroup[]>([]);
     const [selectedDepartment, setSelectedDepartment] = useState<number>(0);
