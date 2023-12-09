@@ -7,7 +7,6 @@ import { RootState } from "@/store";
 import { useSelector } from "react-redux";
 
 import styled from "styled-components";
-import { PageNation } from "@/components/index/PageNation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Post, StudyGroup } from "@/api/interface/data.interface";
@@ -161,7 +160,6 @@ export default function Home({ userInfo }: { userInfo: any }) {
                         postList={filteredPostList}
                         studyGroup={filteredStudyGroup}
                     />
-                    <PageNation />
                 </Outer>
             </MainContent>
         </>

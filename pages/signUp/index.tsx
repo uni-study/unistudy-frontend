@@ -109,7 +109,9 @@ export default function SignUp() {
 
     const handleSignUp = async () => {
         try {
-            const response = await axios.post(`${API_URL}/signup`, userData);
+            const response = await axios.post(`${API_URL}/signup`, userData, {
+                withCredentials: true,
+            });
 
             alert("Successfully signed up!");
             router.push("/logIn");
