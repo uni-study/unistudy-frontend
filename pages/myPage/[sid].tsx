@@ -86,7 +86,7 @@ const CurMemberName = styled.div`
     width: 100%;
     height: 50%;
     padding: 25px 0px 20px 30px;
-    color: #9d9d9d;
+    color: #000;
     font-size: 20px;
     font-weight: 600;
 `;
@@ -133,7 +133,7 @@ const ApplicantName = styled.div`
     width: 70%;
     height: 50%;
     padding: 30px 0px 20px 30px;
-    color: #9d9d9d;
+    color: #000;
     font-size: 20px;
     font-weight: 600;
 `;
@@ -203,7 +203,7 @@ export default function Applicant() {
     const [studyGroup, setStudyGroup] = useState<StudyGroup>();
     const [newState, setNewState] = useState("");
     const [member, setMember] = useState<Member[]>([]);
-    let participantName = "test";
+    const [participantName, setParticipantName] = useState<string>("");
 
     useEffect(() => {
         axios
@@ -221,7 +221,6 @@ export default function Applicant() {
             .get(`${API_URL}/studygroup-member-list/${SG_ID}`)
             .then((response) => {
                 setMember(response.data);
-                console.log("member", member);
             })
             .catch((error) => {
                 console.error("Error getting member data:", error);
@@ -261,7 +260,6 @@ export default function Applicant() {
                 recruitmentDeadline: TSdeadline, // 수정된 currentState 값 전송
             })
             .then((response) => {
-                console.log("Study group updated successfully:", response.data);
                 alert("Recruiting Statement is changed successfully!");
                 router.push("/myPage");
                 // 필요에 따라 어떤 작업을 수행하세요 (예: 성공 메시지 출력 등)
@@ -269,6 +267,15 @@ export default function Applicant() {
             .catch((error) => {
                 console.error("Error updating study group:");
             });
+    };
+
+    const findMemberName = async (uid: number) => {
+        try {
+            const response = await axios.get(`${API_URL}/user/${uid}`);
+            setParticipantName(response.data.name);
+        } catch (error) {
+            console.error("Error getting user name:", error);
+        }
     };
 
     if (!studyGroup || !member) {
@@ -290,6 +297,8 @@ export default function Applicant() {
 
                     {member.map((item, i) => {
                         if (item.accepted) {
+                            const MEMBER_ID = item.userId;
+                            findMemberName(MEMBER_ID);
                             return (
                                 <>
                                     <LineComponent />
@@ -309,6 +318,8 @@ export default function Applicant() {
                                 </>
                             );
                         } else {
+                            const MEMBER_ID = item.userId;
+                            findMemberName(MEMBER_ID);
                             return (
                                 <>
                                     <LineComponent />

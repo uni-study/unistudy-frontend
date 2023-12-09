@@ -154,13 +154,13 @@ export default function StepOne() {
     const handlerOnClick = () => {
         axios
             .post(`${API_URL}/study-group`, userOneData)
-            .then((response) => console.log(response.data))
+            .then((response) => {
+                router.push("/writePost/stepTwo");
+            })
             .catch((error) => {
                 console.log("userdata was", userOneData);
                 console.error("post is not working", error);
             });
-
-        router.push("/writePost/stepTwo");
     };
     dispatch(setStepOneData(userOneData));
 

@@ -68,7 +68,13 @@ export default function DetailPost() {
     }
 
     if (!currentPost || !currentSG || !curWriter) {
-        return <h1> Loading ... </h1>;
+        return (
+            <MainContent>
+                <Outer>
+                    <h1> Please Log In again. </h1>
+                </Outer>
+            </MainContent>
+        );
     }
     return (
         <>

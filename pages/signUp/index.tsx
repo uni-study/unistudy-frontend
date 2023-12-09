@@ -116,8 +116,12 @@ export default function SignUp() {
             alert("Successfully signed up!");
             router.push("/logIn");
         } catch (error: any) {
+            if (error.response.status === 400) {
+                alert("Already signed up user. Please log in.");
+            } else {
+                alert("Sign up failed. Please try again. or Contact us.");
+            }
             console.log("Signup failed", error);
-            console.log("Signup failed response", error.response);
         }
     };
     return (
