@@ -14,6 +14,8 @@ import { RootState } from "@/store";
 import axios from "axios";
 import { API_URL } from "@/api/commonAPI";
 import { useRouter } from "next/router";
+import { checkEmail } from "@/types/checkEmail";
+import { checkDate } from "@/types/checkDate";
 
 const StepOneBox = styled.div`
     display: flex;
@@ -99,7 +101,7 @@ export default function StepOne() {
 
     let [userOneData, setUserOneData] = useState<StepOneInterface>({
         leaderId: curUserInfo?.id, //userId
-        name: "test",
+        name: "",
         description: "test",
         department: 0, //유저인풋
         numOfPeople: 0, //유저인풋
@@ -117,7 +119,7 @@ export default function StepOne() {
         const { value } = e.target;
         setUserOneData((prevData) => ({
             ...prevData,
-            [field]: Number(value.substring(0, 1)),
+            [field]: Number(value.substring(0, 2)),
         }));
     };
 
@@ -126,14 +128,30 @@ export default function StepOne() {
         field: keyof StepOneInterface
     ) => {
         const { value } = e.target;
-        setUserOneData((prevData) => ({
-            ...prevData,
-            [field]: value,
-        }));
+
+        if (field === "recruitmentDeadline") {
+            if (checkDate(value)) {
+                setUserOneData((prevData) => ({
+                    ...prevData,
+                    [field]: value,
+                }));
+            } else {
+                alert("Invalid date format. Please use YYYY-MM-DD format.");
+                setUserOneData((prevData) => ({
+                    ...prevData,
+                    [field]: "",
+                }));
+            }
+        } else {
+            //contact
+            setUserOneData((prevData) => ({
+                ...prevData,
+                [field]: value,
+            }));
+        }
     };
 
     const handlerOnClick = () => {
-        router.push("/writePost/stepTwo");
         axios
             .post(`${API_URL}/study-group`, userOneData)
             .then((response) => console.log(response.data))
@@ -141,6 +159,8 @@ export default function StepOne() {
                 console.log("userdata was", userOneData);
                 console.error("post is not working", error);
             });
+
+        router.push("/writePost/stepTwo");
     };
     dispatch(setStepOneData(userOneData));
 
@@ -151,6 +171,13 @@ export default function StepOne() {
                 <TitleStepOne>Information about your study group</TitleStepOne>
                 <LineComponent />
                 <InfoBoxes>
+                    <InfoBox>
+                        <InfoTitle>Name</InfoTitle>
+                        <InfoInput
+                            placeholder="Study Group Name"
+                            onChange={(e) => handleInputChange(e, "name")}
+                        ></InfoInput>
+                    </InfoBox>
                     <InfoBox>
                         <InfoTitle>Department</InfoTitle>
                         <InfoSelect

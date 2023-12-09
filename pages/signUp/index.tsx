@@ -1,5 +1,4 @@
 import { API_URL } from "@/api/commonAPI";
-import { LOGED_INFO_INTERFACE, User } from "@/api/interface/data.interface";
 import { MainContent } from "@/components/layout/mainContent";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -106,19 +105,17 @@ export default function SignUp() {
             ...prevData,
             [field]: value,
         }));
-        field == "pw"
-            ? console.log("password set", userData)
-            : console.log("wrong");
     };
 
     const handleSignUp = async () => {
         try {
             const response = await axios.post(`${API_URL}/signup`, userData);
-            console.log("SignUp response:", response.data);
 
+            alert("Successfully signed up!");
             router.push("/logIn");
-        } catch (error) {
-            console.error("SignUp error:", error);
+        } catch (error: any) {
+            console.log("Signup failed", error);
+            console.log("Signup failed response", error.response);
         }
     };
     return (

@@ -10,6 +10,7 @@ import axios from "axios";
 import { Post, StudyGroup } from "@/api/interface/data.interface";
 import { API_URL } from "@/api/commonAPI";
 import { useRouter } from "next/router";
+import { errorCatch } from "@/api/errorCatch";
 
 const Outer = styled.div`
     display: flex;
@@ -63,11 +64,10 @@ export default function Home() {
             .get(`${API_URL}/posts`)
             .then((response) => {
                 setPostlist(response.data);
+                setFilteredPostList(response.data);
             })
 
-            .catch(function (error) {
-                console.log(error);
-            });
+            .catch((error) => errorCatch(error));
     }, []);
 
     useEffect(() => {
@@ -77,19 +77,17 @@ export default function Home() {
                 setStudygroup(response.data);
             })
 
-            .catch(function (error) {
-                console.log(error);
-            });
+            .catch((error) => errorCatch(error));
     }, []);
 
     const handleDepartmentChange = (
         e: React.ChangeEvent<HTMLSelectElement>
     ) => {
-        setSelectedDepartment(Number(e.target.value.substring(0, 1)));
+        setSelectedDepartment(Number(e.target.value.substring(0, 2)));
     };
 
     const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedState(Number(e.target.value.substring(0, 1)));
+        setSelectedState(Number(e.target.value.substring(0, 2)));
     };
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +97,6 @@ export default function Home() {
     const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key == "Enter") {
             const filtered = postList.filter((post) => {
-                console.log("is it included?", post.title.includes(searchWord));
                 return (
                     post.title.includes(searchWord) ||
                     post.mainText.includes(searchWord)
@@ -109,25 +106,16 @@ export default function Home() {
         }
     };
 
-    console.log("filteredPostlist", filteredPostList);
-
-    console.log("selectedDepartment", selectedDepartment);
-    console.log("selectedState", selectedState);
-
     const filteredStudyGroup = studyGroup.filter((group) => {
-        console.log("group department", group.department);
-        console.log("group currentState", group.currentState);
         if (selectedDepartment === 0 || selectedState === 3) {
             return group;
         } else {
             return (
-                group.department === selectedDepartment ||
+                group.department === selectedDepartment &&
                 group.currentState === selectedState
             );
         }
     });
-
-    console.log("filteredStudyGroup", filteredStudyGroup);
 
     return (
         <>
@@ -158,6 +146,7 @@ export default function Home() {
                             </Select>
                         </Filtering>
                         <SearchBar
+                            placeholder="Search"
                             onChange={handleSearch}
                             onKeyDown={handleOnKeyDown}
                         ></SearchBar>

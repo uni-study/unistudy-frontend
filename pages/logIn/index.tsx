@@ -1,7 +1,7 @@
 import { API_URL } from "@/api/commonAPI";
 import { MainContent } from "@/components/layout/mainContent";
 import axios from "axios";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -29,15 +29,21 @@ const LogInBox = styled.div`
     align-items: flex-start;
     gap: 11px;
 `;
+
+const InputWrap = styled.div`
+    height: 80px;
+    display: inline-block;
+    width: 100%;
+`;
 const EmailInput = styled.input`
     width: 610px;
-    height: 100px;
+    height: 100%;
     border-radius: 20px;
     border: 3px solid #e6e6e6;
 `;
 const PasswordInput = styled.input`
     width: 610px;
-    height: 100px;
+    height: 100%;
     border-radius: 20px;
     border: 3px solid #e6e6e6;
 `;
@@ -53,16 +59,16 @@ const LogInButton = styled.button`
     height: 59.829px;
     border-radius: 40px;
     background: #44c1c4;
+    font-size: 15px;
     color: white;
     border: #fff;
 `;
 const SignUpButton = styled.button`
     color: #9d9d9d;
     width: 270px;
-    height: 68px;
+    height: 59.829px;
     text-align: center;
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 15px;
     border: #fff;
     background: #fff;
 `;
@@ -78,7 +84,6 @@ export default function LogIn() {
             const response = await axios.get(`${API_URL}/users`);
 
             const users = response.data;
-            console.log("user info is ", users);
 
             // 이메일로 사용자 정보 찾기
             const foundUser = users.find((user: any) => user.email === email);
@@ -102,18 +107,22 @@ export default function LogIn() {
                 <TotalBox>
                     <LogInTitle>Log In</LogInTitle>
                     <LogInBox>
-                        <EmailInput
-                            type="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <PasswordInput
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                        <InputWrap>
+                            <EmailInput
+                                type="email"
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </InputWrap>
+                        <InputWrap>
+                            <PasswordInput
+                                type="password"
+                                placeholder="Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </InputWrap>
                     </LogInBox>
                     <ButtonBox>
                         <LogInButton onClick={handleLogIn}>Log In</LogInButton>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import LineComponent from "../common/LineComponent";
-import { Post, StudyGroup } from "@/api/interface/data.interface";
+import { Post, StudyGroup, User } from "@/api/interface/data.interface";
 import {
     department,
     studyMethod,
@@ -9,6 +9,10 @@ import {
     studyPeriod,
     currentState,
 } from "@/types/data";
+import axios from "axios";
+import { API_URL } from "@/api/commonAPI";
+import { writer } from "repl";
+import { useEffect, useState } from "react";
 
 const Outer = styled.div`
     display: flex;
@@ -104,6 +108,25 @@ export function StudyList({
     const moveToDetailPost = (pid: number) => {
         router.push(`/detailPost/${pid}`);
     };
+    const [user, setUser] = useState<User[]>([]);
+
+    useEffect(() => {
+        axios.get(`${API_URL}/users`).then((response) => {
+            setUser(response.data);
+        });
+    }, []);
+
+    const getWriterName = (wid: number) => {
+        if (user) {
+            const writer = user.find((item, idx) => {
+                return item.id == wid;
+            });
+            return writer?.name;
+        } else {
+            return "";
+        }
+    };
+
     //게시글 띄울 때 필요한 정보
     //postlist : title
     //studyGroup : department, studyMethod, recuritmentDeadline, currentstate, name
@@ -158,7 +181,7 @@ export function StudyList({
                                 </InfoBox>
 
                                 <LineComponent />
-                                <Writer>{currentStudyGroupInfo.name}</Writer>
+                                <Writer>{getWriterName(e.writerId)}</Writer>
                             </ContentBox>
                         );
                     }

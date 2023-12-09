@@ -10,18 +10,21 @@ const Outer = styled.div`
     height: 500px;
     flex-direction: column;
     justify-content: center;
+    white-space: pre-line;
 `;
 
 const Main = styled.div`
     width: 100%;
     font-size: 25px;
     font-weight: 600;
+    white-space: pre-line;
 `;
 export default function MainText(props: PROPS_TYPE) {
+    let showText = props.mainText;
     return (
         <>
             <Outer>
-                <Main>{props.mainText}</Main>
+                <Main>{showText}</Main>
             </Outer>
         </>
     );
