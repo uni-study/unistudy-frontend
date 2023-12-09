@@ -1,11 +1,12 @@
 import { API_URL } from "@/api/commonAPI";
 import { MainContent } from "@/components/layout/mainContent";
 import axios from "axios";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { setIsLoggedIn, setUserInfo } from "@/store/modules/user";
+import { error } from "console";
 
 const TotalBox = styled.div`
     display: flex;
@@ -29,15 +30,21 @@ const LogInBox = styled.div`
     align-items: flex-start;
     gap: 11px;
 `;
+
+const InputWrap = styled.div`
+    height: 80px;
+    display: inline-block;
+    width: 100%;
+`;
 const EmailInput = styled.input`
     width: 610px;
-    height: 100px;
+    height: 100%;
     border-radius: 20px;
     border: 3px solid #e6e6e6;
 `;
 const PasswordInput = styled.input`
     width: 610px;
-    height: 100px;
+    height: 100%;
     border-radius: 20px;
     border: 3px solid #e6e6e6;
 `;
@@ -53,16 +60,16 @@ const LogInButton = styled.button`
     height: 59.829px;
     border-radius: 40px;
     background: #44c1c4;
+    font-size: 15px;
     color: white;
     border: #fff;
 `;
 const SignUpButton = styled.button`
     color: #9d9d9d;
     width: 270px;
-    height: 68px;
+    height: 59.829px;
     text-align: center;
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 15px;
     border: #fff;
     background: #fff;
 `;
@@ -75,21 +82,15 @@ export default function LogIn() {
 
     const handleLogIn = async () => {
         try {
-            const response = await axios.get(`${API_URL}/users`);
-
-            const users = response.data;
-            console.log("user info is ", users);
-
-            // 이메일로 사용자 정보 찾기
-            const foundUser = users.find((user: any) => user.email === email);
-
-            if (foundUser && foundUser.pw === password) {
-                console.log("로그인 성공");
+            // POST /login API 호출
+            const response = await axios.post(`${API_URL}/login`, {
+                email: email,
+                pw: password,
+            });
+            if (response.status === 200) {
                 dispatch(setIsLoggedIn(true));
-                dispatch(setUserInfo(foundUser));
-                router.push("/"); // 로그인 성공 시 이동할 페이지로 경로 지정 ('/dashboard'는 예시 경로)
-            } else {
-                alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+                dispatch(setUserInfo(response.data));
+                router.push("/");
             }
         } catch (error) {
             console.error("로그인 에러:", error);
@@ -102,18 +103,22 @@ export default function LogIn() {
                 <TotalBox>
                     <LogInTitle>Log In</LogInTitle>
                     <LogInBox>
-                        <EmailInput
-                            type="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <PasswordInput
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                        <InputWrap>
+                            <EmailInput
+                                type="email"
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </InputWrap>
+                        <InputWrap>
+                            <PasswordInput
+                                type="password"
+                                placeholder="Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </InputWrap>
                     </LogInBox>
                     <ButtonBox>
                         <LogInButton onClick={handleLogIn}>Log In</LogInButton>

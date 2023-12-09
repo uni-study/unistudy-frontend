@@ -7,7 +7,7 @@ import MainText from "@/components/detailPost/MainText";
 import PorDBtn from "@/components/detailPost/PorDBtn";
 import Comment from "@/components/detailPost/Comment";
 import LineComponent from "@/components/common/LineComponent";
-import { Post, StudyGroup } from "@/api/interface/data.interface";
+import { Post, StudyGroup, User } from "@/api/interface/data.interface";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "@/api/commonAPI";
@@ -35,41 +35,39 @@ export default function DetailPost() {
 
     let [currentPost, setCurrentPost] = useState<Post | null>(null);
     let [currentSG, setCurrentSG] = useState<StudyGroup | null>(null);
+    let [curWriter, setWriter] = useState<User | null>(null);
 
     useEffect(() => {
-        axios
-            .get(`${API_URL}/post/${POST_ID}`)
-            .then((response) => {
-                setCurrentPost(response.data);
-            })
+        const fetchData = async () => {
+            try {
+                const postResponse = await axios.get(
+                    `${API_URL}/post/${POST_ID}`
+                );
+                setCurrentPost(postResponse.data);
 
-            .catch(function (error) {
-                console.log(error);
-            });
+                const studyGroupResponse = await axios.get(
+                    `${API_URL}/study-groups/${postResponse.data.studygroupId}`
+                );
+                setCurrentSG(studyGroupResponse.data);
+
+                const userResponse = await axios.get(
+                    `${API_URL}/user/${postResponse.data.writerId}`
+                );
+                setWriter(userResponse.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
     }, [POST_ID]);
-
-    console.log("after currentPost ", currentPost);
 
     let STUDY_GROUP_ID: number = 0;
     if (currentPost) {
         STUDY_GROUP_ID = currentPost.studygroupId;
     }
 
-    useEffect(() => {
-        axios
-            .get(`${API_URL}/study-groups/${STUDY_GROUP_ID}`)
-            .then((response) => {
-                setCurrentSG(response.data);
-            })
-
-            .catch(function (error) {
-                console.log(error);
-            });
-    }, [STUDY_GROUP_ID]);
-
-    console.log("currentSG is ", currentSG);
-
-    if (!currentPost || !currentSG) {
+    if (!currentPost || !currentSG || !curWriter) {
         return <h1> Loading ... </h1>;
     }
     return (
@@ -78,7 +76,7 @@ export default function DetailPost() {
                 <Outer>
                     <Title
                         title={currentPost.title}
-                        writer={currentSG.name}
+                        writer={curWriter.name}
                         postedAt={currentPost.postedAt}
                     />
                     <LineComponent />

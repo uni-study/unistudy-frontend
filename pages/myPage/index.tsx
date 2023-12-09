@@ -9,6 +9,7 @@ import { RootState } from "@/store";
 import { useSelector } from "react-redux";
 import { API_URL } from "@/api/commonAPI";
 import { useRouter } from "next/router";
+import { current } from "@reduxjs/toolkit";
 
 const ProfileBox = styled.div`
     display: flex;

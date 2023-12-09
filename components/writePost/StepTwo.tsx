@@ -83,7 +83,6 @@ export default function StepTwo() {
                         item.studyPeriod == curStepOne?.studyPeriod
                     ) {
                         setCurStudyGroup(item.id);
-                        console.log("1 curStudyGroupId is ", curStudyGroupId);
                     }
                 });
             })
@@ -124,10 +123,14 @@ export default function StepTwo() {
         field: keyof StepTwoInterface
     ) => {
         const { value } = e.target;
+        let contents = value;
+        contents = contents.replaceAll("<br>", "\r\n");
         setUserTwoData((prevData) => ({
             ...prevData,
-            [field]: value,
+            [field]: contents,
         }));
+
+        console.log("contents is ", contents);
     };
 
     useEffect(() => {
