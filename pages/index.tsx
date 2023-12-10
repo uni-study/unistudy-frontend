@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Post, StudyGroup } from "@/api/interface/data.interface";
 import { API_URL } from "@/api/commonAPI";
-import { useRouter } from "next/router";
 import { errorCatch } from "@/api/errorCatch";
 
 const Outer = styled.div`
@@ -57,7 +56,6 @@ export default function Home() {
     const [selectedState, setSelectedState] = useState<number>(0);
     const [searchWord, setSearchWord] = useState<string>("");
     const [filteredPostList, setFilteredPostList] = useState<Post[]>(postList);
-    const router = useRouter();
 
     useEffect(() => {
         axios
@@ -65,6 +63,7 @@ export default function Home() {
             .then((response) => {
                 setPostlist(response.data);
                 setFilteredPostList(response.data);
+                console.log("GET post success", response.data);
             })
 
             .catch((error) => errorCatch(error));
@@ -96,13 +95,17 @@ export default function Home() {
 
     const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key == "Enter") {
-            const filtered = postList.filter((post) => {
-                return (
-                    post.title.includes(searchWord) ||
-                    post.mainText.includes(searchWord)
-                );
-            });
-            setFilteredPostList(filtered);
+            if (postList) {
+                const filtered = postList.filter((post) => {
+                    return (
+                        post.title.includes(searchWord) ||
+                        post.mainText.includes(searchWord)
+                    );
+                });
+                setFilteredPostList(filtered);
+            } else {
+                alert("There is no post.");
+            }
         }
     };
 
@@ -117,47 +120,59 @@ export default function Home() {
         }
     });
 
-    return (
-        <>
-            <MainContent>
-                <Outer>
-                    <Title>Study Group</Title>
-                    <SearchBox>
-                        <Filtering>
-                            <Select onChange={handleDepartmentChange}>
-                                {department.map((e, i) => {
-                                    return (
-                                        <option value={e} key={i}>
-                                            {" "}
-                                            {e.substring(3)}{" "}
-                                        </option>
-                                    );
-                                })}
-                            </Select>
-                            <Select onChange={handleStateChange}>
-                                {currentState.map((e, i) => {
-                                    return (
-                                        <option value={e} key={i}>
-                                            {" "}
-                                            {e.substring(3)}{" "}
-                                        </option>
-                                    );
-                                })}
-                            </Select>
-                        </Filtering>
-                        <SearchBar
-                            placeholder="Search"
-                            onChange={handleSearch}
-                            onKeyDown={handleOnKeyDown}
-                        ></SearchBar>
-                    </SearchBox>
+    if (department && currentState) {
+        return (
+            <>
+                <MainContent>
+                    <Outer>
+                        <Title>Study Group</Title>
+                        <SearchBox>
+                            <Filtering>
+                                <Select onChange={handleDepartmentChange}>
+                                    {department.map((e, i) => {
+                                        return (
+                                            <option value={e} key={i}>
+                                                {" "}
+                                                {e.substring(3)}{" "}
+                                            </option>
+                                        );
+                                    })}
+                                </Select>
+                                <Select onChange={handleStateChange}>
+                                    {currentState.map((e, i) => {
+                                        return (
+                                            <option value={e} key={i}>
+                                                {" "}
+                                                {e.substring(3)}{" "}
+                                            </option>
+                                        );
+                                    })}
+                                </Select>
+                            </Filtering>
+                            <SearchBar
+                                placeholder="Search"
+                                onChange={handleSearch}
+                                onKeyDown={handleOnKeyDown}
+                            ></SearchBar>
+                        </SearchBox>
 
-                    <StudyList
-                        postList={filteredPostList}
-                        studyGroup={filteredStudyGroup}
-                    />
-                </Outer>
-            </MainContent>
-        </>
-    );
+                        <StudyList
+                            postList={filteredPostList}
+                            studyGroup={filteredStudyGroup}
+                        />
+                    </Outer>
+                </MainContent>
+            </>
+        );
+    } else {
+        return (
+            <>
+                <MainContent>
+                    <Outer>
+                        <h1> There is No Post. </h1>
+                    </Outer>
+                </MainContent>
+            </>
+        );
+    }
 }
