@@ -1,7 +1,9 @@
-import Header from "./header";
-import Footer from "./footer";
+import dynamic from "next/dynamic";
 import { ReactNode } from "react";
 import styled from "styled-components";
+
+const Header = dynamic(import("@/components/layout/header"));
+const Footer = dynamic(import("@/components/layout/footer"));
 
 const Outer = styled.div`
     width: 100%;

@@ -1,12 +1,14 @@
+import dynamic from "next/dynamic";
+
 import { API_URL } from "@/api/commonAPI";
-import { MainContent } from "@/components/layout/mainContent";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { setIsLoggedIn, setUserInfo } from "@/store/modules/user";
-import { error } from "console";
+
+const MainContent = dynamic(import("@/components/layout/mainContent"));
 
 const TotalBox = styled.div`
     display: flex;

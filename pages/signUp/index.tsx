@@ -1,9 +1,12 @@
+import dynamic from "next/dynamic";
+
 import { API_URL } from "@/api/commonAPI";
-import { MainContent } from "@/components/layout/mainContent";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
+
+const MainContent = dynamic(import("@/components/layout/mainContent"));
 
 const SignUpTitle = styled.h1`
     width: 270px;

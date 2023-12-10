@@ -1,7 +1,6 @@
+import dynamic from "next/dynamic";
 import { API_URL } from "@/api/commonAPI";
 import { Member, StudyGroup } from "@/api/interface/data.interface";
-import LineComponent from "@/components/common/LineComponent";
-import { MainContent } from "@/components/layout/mainContent";
 import { RootState } from "@/store";
 import { currentState } from "@/types/data";
 import axios from "axios";
@@ -9,6 +8,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+
+const LineComponent = dynamic(import("@/components/common/LineComponent"));
+const MainContent = dynamic(import("@/components/layout/mainContent"));
 
 const Outer = styled.div`
     display: flex;

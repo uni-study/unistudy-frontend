@@ -6,7 +6,6 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { Member, Post, StudyGroup } from "@/api/interface/data.interface";
-import { set } from "immer/dist/internal.js";
 
 const Outer = styled.div`
     display: flex;

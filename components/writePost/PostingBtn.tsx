@@ -1,10 +1,8 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import axios from "axios";
 import { API_URL } from "@/api/commonAPI";
-import { studyMethod } from "@/types/data";
 import { useRouter } from "next/router";
 
 const ButtonBox = styled.div`

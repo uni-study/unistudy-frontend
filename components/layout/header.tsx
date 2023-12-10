@@ -1,7 +1,6 @@
 import { RootState } from "@/store";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
