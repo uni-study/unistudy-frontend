@@ -1,12 +1,13 @@
+import dynamic from "next/dynamic";
 import styled from "styled-components";
-import LineComponent from "@/components/common/LineComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { RootState } from "@/store";
 import axios from "axios";
 import { API_URL } from "@/api/commonAPI";
 import { setStepTwoData } from "@/store/modules/post_stepTwo";
-import { stat } from "fs";
+
+const LineComponent = dynamic(import("@/components/common/LineComponent"));
 
 const StepTwoBox = styled.div`
     width: 100%;

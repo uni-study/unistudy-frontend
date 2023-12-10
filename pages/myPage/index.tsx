@@ -1,15 +1,16 @@
-import LineComponent from "@/components/common/LineComponent";
-import { MainContent } from "@/components/layout/mainContent";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import type { Post, StudyGroup, User } from "@/api/interface/data.interface";
-import axios, { AxiosResponse } from "axios";
+import type { Post, StudyGroup } from "@/api/interface/data.interface";
+import axios from "axios";
 import { RootState } from "@/store";
 import { useSelector } from "react-redux";
 import { API_URL } from "@/api/commonAPI";
 import { useRouter } from "next/router";
-import { current } from "@reduxjs/toolkit";
+
+const LineComponent = dynamic(import("@/components/common/LineComponent"));
+const MainContent = dynamic(import("@/components/layout/mainContent"));
 
 const ProfileBox = styled.div`
     display: flex;

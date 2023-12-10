@@ -1,20 +1,22 @@
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { MainContent } from "@/components/layout/mainContent";
-import Title from "@/components/detailPost/Title";
-import Information from "@/components/detailPost/Information";
-import MainText from "@/components/detailPost/MainText";
-import PorDBtn from "@/components/detailPost/PorDBtn";
-import Comment from "@/components/detailPost/Comment";
-import LineComponent from "@/components/common/LineComponent";
 import { Post, StudyGroup, User } from "@/api/interface/data.interface";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "@/api/commonAPI";
 
+const MainContent = dynamic(import("@/components/layout/mainContent"));
+const Title = dynamic(import("@/components/detailPost/Title"));
+const Information = dynamic(import("@/components/detailPost/Information"));
+const MainText = dynamic(import("@/components/detailPost/MainText"));
+const PorDBtn = dynamic(import("@/components/detailPost/PorDBtn"));
+const Comment = dynamic(import("@/components/detailPost/Comment"));
+const LineComponent = dynamic(import("@/components/common/LineComponent"));
+
 const Outer = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-direction: colmn;
     justify-content: center;
     align-items: center;
     gap: 70px;

@@ -1,10 +1,8 @@
-import { MainContent } from "@/components/layout/mainContent";
-import { Search } from "@/components/index/Search";
-import { StudyList } from "@/components/index/StudyList";
+import dynamic from "next/dynamic";
+
+const MainContent = dynamic(import("@/components/layout/mainContent"));
+const StudyList = dynamic(import("@/components/index/StudyList"));
 import { department, currentState } from "@/types/data";
-import { GetServerSideProps } from "next";
-import { RootState } from "@/store";
-import { useSelector } from "react-redux";
 
 import styled from "styled-components";
 import { useEffect, useState } from "react";

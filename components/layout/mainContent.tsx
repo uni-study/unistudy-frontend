@@ -18,7 +18,7 @@ const Inner = styled.div`
     flex-direction: column;
     gap: 70px;
 `;
-export function MainContent({ children }: { children: ReactNode }) {
+export default function MainContent({ children }: { children: ReactNode }) {
     return (
         <>
             <Outer>

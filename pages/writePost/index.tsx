@@ -1,5 +1,7 @@
-import { MainContent } from "@/components/layout/mainContent";
-import StepOne from "@/components/writePost/StepOne";
+import dynamic from "next/dynamic";
+
+const MainContent = dynamic(import("@/components/layout/mainContent"));
+const StepOne = dynamic(import("@/components/writePost/StepOne"));
 
 export default function WritePost() {
     return (

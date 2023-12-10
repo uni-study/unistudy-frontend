@@ -1,18 +1,13 @@
+import dynamic from "next/dynamic";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import LineComponent from "../common/LineComponent";
 import { Post, StudyGroup, User } from "@/api/interface/data.interface";
-import {
-    department,
-    studyMethod,
-    numOfPeople,
-    studyPeriod,
-    currentState,
-} from "@/types/data";
+import { department, studyMethod, currentState } from "@/types/data";
 import axios from "axios";
 import { API_URL } from "@/api/commonAPI";
-import { writer } from "repl";
 import { useEffect, useState } from "react";
+
+const LineComponent = dynamic(import("@/components/common/LineComponent"));
 
 const Outer = styled.div`
     display: flex;
@@ -97,7 +92,7 @@ const Writer = styled.div`
     line-height: 23px;
 `;
 
-export function StudyList({
+export default function StudyList({
     postList,
     studyGroup,
 }: {

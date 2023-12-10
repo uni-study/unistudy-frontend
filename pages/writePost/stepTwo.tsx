@@ -1,6 +1,8 @@
-import { MainContent } from "@/components/layout/mainContent";
-import PostingBtn from "@/components/writePost/PostingBtn";
-import StepTwo from "@/components/writePost/StepTwo";
+import dynamic from "next/dynamic";
+
+const MainContent = dynamic(import("@/components/layout/mainContent"));
+const PostingBtn = dynamic(import("@/components/writePost/PostingBtn"));
+const StepTwo = dynamic(import("@/components/writePost/StepTwo"));
 
 export default function Content() {
     return (

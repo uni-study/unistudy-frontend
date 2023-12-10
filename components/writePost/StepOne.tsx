@@ -1,5 +1,5 @@
+import dynamic from "next/dynamic";
 import styled from "styled-components";
-import LineComponent from "@/components/common/LineComponent";
 import {
     department,
     studyMethod,
@@ -9,13 +9,14 @@ import {
 } from "@/types/data";
 import { useDispatch, useSelector } from "react-redux";
 import { setStepOneData } from "@/store/modules/post_stepOne";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { RootState } from "@/store";
 import axios from "axios";
 import { API_URL } from "@/api/commonAPI";
 import { useRouter } from "next/router";
-import { checkEmail } from "@/types/checkEmail";
 import { checkDate } from "@/types/checkDate";
+
+const LineComponent = dynamic(import("@/components/common/LineComponent"));
 
 const StepOneBox = styled.div`
     display: flex;
