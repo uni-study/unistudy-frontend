@@ -92,7 +92,7 @@ export default function MyPage() {
         router.push(`/detailPost/${pid}`);
     };
 
-    if (!userInfo)
+    if (!userInfo || !userPosts || !userStudyGroups)
         return (
             <MainContent>
                 <h1> Wrong Access </h1>

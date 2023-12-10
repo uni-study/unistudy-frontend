@@ -126,62 +126,73 @@ export default function StudyList({
     //postlist : title
     //studyGroup : department, studyMethod, recuritmentDeadline, currentstate, name
     //두개 연결: studygroupd의 id와 post의 studyGroupId가 같은 것
+    if (!postList || !studyGroup) {
+        return (
+            <>
+                <Outer>
+                    <h1> 아직 작성된 게시글이 없습니다.</h1>
+                </Outer>
+            </>
+        );
+    } else {
+        return (
+            <>
+                <Outer>
+                    {postList.map((e, i) => {
+                        const currentStudyGroupId = e.studygroupId;
+                        const currentStudyGroupInfo: StudyGroup | undefined =
+                            studyGroup.find(
+                                (item, idx) => item.id == currentStudyGroupId
+                            );
 
-    return (
-        <>
-            <Outer>
-                {postList.map((e, i) => {
-                    const currentStudyGroupId = e.studygroupId;
-                    const currentStudyGroupInfo: StudyGroup | undefined =
-                        studyGroup.find(
-                            (item, idx) => item.id == currentStudyGroupId
-                        );
+                        if (!currentStudyGroupInfo) {
+                            return <></>;
+                        } else {
+                            const deadline = new Date(
+                                currentStudyGroupInfo.recruitmentDeadline
+                            )
+                                .toISOString()
+                                .substring(0, 10);
 
-                    if (!currentStudyGroupInfo) {
-                        return <></>;
-                    } else {
-                        const deadline = new Date(
-                            currentStudyGroupInfo.recruitmentDeadline
-                        )
-                            .toISOString()
-                            .substring(0, 10);
+                            return (
+                                <ContentBox
+                                    key={i}
+                                    onClick={() => {
+                                        moveToDetailPost(e.id);
+                                    }}
+                                >
+                                    <FirstLine>
+                                        <DateDIV>{deadline}</DateDIV>
+                                        <CurrentState>
+                                            {currentState[
+                                                currentStudyGroupInfo
+                                                    .currentState
+                                            ].substring(3)}
+                                        </CurrentState>
+                                    </FirstLine>
+                                    <Title>{e.title}</Title>
+                                    <InfoBox>
+                                        <Info>
+                                            {department[
+                                                currentStudyGroupInfo.department
+                                            ].substring(3)}
+                                        </Info>
+                                        <Info>
+                                            {studyMethod[
+                                                currentStudyGroupInfo
+                                                    .studyMethod
+                                            ].substring(3)}
+                                        </Info>
+                                    </InfoBox>
 
-                        return (
-                            <ContentBox
-                                key={i}
-                                onClick={() => {
-                                    moveToDetailPost(e.id);
-                                }}
-                            >
-                                <FirstLine>
-                                    <DateDIV>{deadline}</DateDIV>
-                                    <CurrentState>
-                                        {currentState[
-                                            currentStudyGroupInfo.currentState
-                                        ].substring(3)}
-                                    </CurrentState>
-                                </FirstLine>
-                                <Title>{e.title}</Title>
-                                <InfoBox>
-                                    <Info>
-                                        {department[
-                                            currentStudyGroupInfo.department
-                                        ].substring(3)}
-                                    </Info>
-                                    <Info>
-                                        {studyMethod[
-                                            currentStudyGroupInfo.studyMethod
-                                        ].substring(3)}
-                                    </Info>
-                                </InfoBox>
-
-                                <LineComponent />
-                                <Writer>{getWriterName(e.writerId)}</Writer>
-                            </ContentBox>
-                        );
-                    }
-                })}
-            </Outer>
-        </>
-    );
+                                    <LineComponent />
+                                    <Writer>{getWriterName(e.writerId)}</Writer>
+                                </ContentBox>
+                            );
+                        }
+                    })}
+                </Outer>
+            </>
+        );
+    }
 }
