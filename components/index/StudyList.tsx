@@ -126,15 +126,7 @@ export default function StudyList({
     //postlist : title
     //studyGroup : department, studyMethod, recuritmentDeadline, currentstate, name
     //두개 연결: studygroupd의 id와 post의 studyGroupId가 같은 것
-    if (!postList || !studyGroup) {
-        return (
-            <>
-                <Outer>
-                    <h1> 아직 작성된 게시글이 없습니다.</h1>
-                </Outer>
-            </>
-        );
-    } else {
+    if (postList && studyGroup) {
         return (
             <>
                 <Outer>
@@ -191,6 +183,14 @@ export default function StudyList({
                             );
                         }
                     })}
+                </Outer>
+            </>
+        );
+    } else {
+        return (
+            <>
+                <Outer>
+                    <h1> 아직 작성된 게시글이 없습니다.</h1>
                 </Outer>
             </>
         );

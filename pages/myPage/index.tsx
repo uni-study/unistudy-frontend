@@ -92,16 +92,8 @@ export default function MyPage() {
         router.push(`/detailPost/${pid}`);
     };
 
-    if (!userInfo || !userPosts || !userStudyGroups)
-        return (
-            <MainContent>
-                <h1> Wrong Access </h1>
-                <h2> Please check if you are logged in. </h2>
-            </MainContent>
-        );
-    else {
+    if (userInfo && userPosts && userStudyGroups) {
         const USER_NAME = userInfo.name;
-
         return (
             <MainContent>
                 <ProfileBox>
@@ -116,7 +108,7 @@ export default function MyPage() {
                 <MyStudyInfoBox>
                     <MyStudyInfoTitle>My Study Group</MyStudyInfoTitle>
                     <MyStudyInfo>
-                        {userStudyGroups?.map((studyGroup) => (
+                        {userStudyGroups.map((studyGroup) => (
                             <MyStudyInfoItem
                                 key={studyGroup.id}
                                 onClick={() => handleMoveToSG(studyGroup.id)}
@@ -130,7 +122,7 @@ export default function MyPage() {
                 <PostingListBox>
                     <PostingListTitle>Posting List</PostingListTitle>
                     <PostingList>
-                        {userPosts?.map((post) => (
+                        {userPosts.map((post) => (
                             <PostingListItem
                                 key={post.id}
                                 onClick={() => handleMoveToPost(post.id)}
@@ -140,6 +132,13 @@ export default function MyPage() {
                         ))}
                     </PostingList>
                 </PostingListBox>
+            </MainContent>
+        );
+    } else {
+        return (
+            <MainContent>
+                <h1> Wrong Access </h1>
+                <h2> Please check if you are logged in. </h2>
             </MainContent>
         );
     }
