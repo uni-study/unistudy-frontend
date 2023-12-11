@@ -214,6 +214,7 @@ export default function Applicant() {
                     "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
+                withCredentials: true,
             })
             .then((response) => {
                 setStudyGroup(response.data);
@@ -230,6 +231,7 @@ export default function Applicant() {
                     "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
+                withCredentials: true,
             })
             .then((response) => {
                 setMember(response.data);
@@ -288,6 +290,7 @@ export default function Applicant() {
                     "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
+                withCredentials: true,
             });
             setParticipantName(response.data.name);
         } catch (error) {

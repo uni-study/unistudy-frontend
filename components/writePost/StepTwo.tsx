@@ -71,6 +71,7 @@ export default function StepTwo() {
                     "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
+                withCredentials: true,
             })
             .then((response) => {
                 const res = response.data;

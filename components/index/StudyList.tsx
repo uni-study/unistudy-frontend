@@ -112,6 +112,7 @@ export default function StudyList({
                     "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
+                withCredentials: true,
             })
             .then((response) => {
                 setUser(response.data);

@@ -64,6 +64,7 @@ export default function Home() {
                     "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
+                withCredentials: true,
             })
             .then((response) => {
                 setPostlist(response.data);
@@ -80,6 +81,7 @@ export default function Home() {
                     "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
+                withCredentials: true,
             })
             .then((response) => {
                 setStudygroup(response.data);

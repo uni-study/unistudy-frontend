@@ -69,6 +69,7 @@ export default function MyPage() {
                     "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
+                withCredentials: true,
             })
             .then((response) => {
                 setUserPosts(response.data);
@@ -85,6 +86,7 @@ export default function MyPage() {
                     "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
+                withCredentials: true,
             })
             .then((response) => {
                 setUserStudyGroups(response.data);
