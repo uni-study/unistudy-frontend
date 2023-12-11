@@ -61,7 +61,7 @@ export default function Home() {
         axios
             .get(`${API_URL}/posts`, {
                 headers: {
-                    "Content-Type": `application/json`,
+                    "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
             })
@@ -77,7 +77,7 @@ export default function Home() {
         axios
             .get(`${API_URL}/study-groups`, {
                 headers: {
-                    "Content-Type": `application/json`,
+                    "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
             })

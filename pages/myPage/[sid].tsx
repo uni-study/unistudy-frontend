@@ -211,7 +211,7 @@ export default function Applicant() {
         axios
             .get(`${API_URL}/study-groups/${SG_ID}`, {
                 headers: {
-                    "Content-Type": `application/json`,
+                    "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
             })
@@ -227,7 +227,7 @@ export default function Applicant() {
         axios
             .get(`${API_URL}/studygroup-member-list/${SG_ID}`, {
                 headers: {
-                    "Content-Type": `application/json`,
+                    "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
             })
@@ -283,7 +283,12 @@ export default function Applicant() {
 
     const findMemberName = async (uid: number) => {
         try {
-            const response = await axios.get(`${API_URL}/user/${uid}`);
+            const response = await axios.get(`${API_URL}/user/${uid}`, {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "ngrok-skip-browser-warning": "69420",
+                },
+            });
             setParticipantName(response.data.name);
         } catch (error) {
             console.error("Error getting user name:", error);

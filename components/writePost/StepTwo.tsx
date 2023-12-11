@@ -68,7 +68,7 @@ export default function StepTwo() {
         axios
             .get(`${API_URL}/study-groups?leaderId=${USER_ID}`, {
                 headers: {
-                    "Content-Type": `application/json`,
+                    "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
             })
