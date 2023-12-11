@@ -117,7 +117,7 @@ export default function SignUp() {
             });
 
             alert("Successfully signed up!");
-            router.push("/logIn");
+            router.push("/logIn", undefined, { shallow: true });
         } catch (error: any) {
             if (error.response.status === 400) {
                 alert("Already signed up user. Please log in.");

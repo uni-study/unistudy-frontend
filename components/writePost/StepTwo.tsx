@@ -66,7 +66,12 @@ export default function StepTwo() {
 
     if (curUserInfo) {
         axios
-            .get(`${API_URL}/study-groups?leaderId=${USER_ID}`)
+            .get(`${API_URL}/study-groups?leaderId=${USER_ID}`, {
+                headers: {
+                    "Content-Type": `application/json`,
+                    "ngrok-skip-browser-warning": "69420",
+                },
+            })
             .then((response) => {
                 const res = response.data;
                 res.forEach((item: any) => {

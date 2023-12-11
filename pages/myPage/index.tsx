@@ -64,7 +64,12 @@ export default function MyPage() {
 
     useEffect(() => {
         axios
-            .get(`${API_URL}/posts?writerId=${currentUID}`)
+            .get(`${API_URL}/posts?writerId=${currentUID}`, {
+                headers: {
+                    "Content-Type": `application/json`,
+                    "ngrok-skip-browser-warning": "69420",
+                },
+            })
             .then((response) => {
                 setUserPosts(response.data);
             })
@@ -75,7 +80,12 @@ export default function MyPage() {
 
     useEffect(() => {
         axios
-            .get(`${API_URL}/study-groups?leaderId=${currentUID}`)
+            .get(`${API_URL}/study-groups?leaderId=${currentUID}`, {
+                headers: {
+                    "Content-Type": `application/json`,
+                    "ngrok-skip-browser-warning": "69420",
+                },
+            })
             .then((response) => {
                 setUserStudyGroups(response.data);
             })
