@@ -66,7 +66,7 @@ export default function MyPage() {
         axios
             .get(`${API_URL}/posts?writerId=${currentUID}`, {
                 headers: {
-                    "Content-Type": `application/json`,
+                    "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
             })
@@ -82,7 +82,7 @@ export default function MyPage() {
         axios
             .get(`${API_URL}/study-groups?leaderId=${currentUID}`, {
                 headers: {
-                    "Content-Type": `application/json`,
+                    "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
             })

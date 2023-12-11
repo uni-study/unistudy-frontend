@@ -109,7 +109,7 @@ export default function StudyList({
         axios
             .get(`${API_URL}/users`, {
                 headers: {
-                    "Content-Type": `application/json`,
+                    "Access-Control-Allow-Origin": "*",
                     "ngrok-skip-browser-warning": "69420",
                 },
             })
