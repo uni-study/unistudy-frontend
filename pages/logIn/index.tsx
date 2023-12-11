@@ -92,7 +92,7 @@ export default function LogIn() {
             if (response.status === 200) {
                 dispatch(setIsLoggedIn(true));
                 dispatch(setUserInfo(response.data));
-                router.push("/");
+                router.push("/", undefined, { shallow: true });
             }
         } catch (error) {
             console.error("로그인 에러:", error);

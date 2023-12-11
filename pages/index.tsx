@@ -59,11 +59,15 @@ export default function Home() {
 
     useEffect(() => {
         axios
-            .get(`${API_URL}/posts`)
+            .get(`${API_URL}/posts`, {
+                headers: {
+                    "Content-Type": `application/json`,
+                    "ngrok-skip-browser-warning": "69420",
+                },
+            })
             .then((response) => {
                 setPostlist(response.data);
                 setFilteredPostList(response.data);
-                console.log("GET post success", response.data);
             })
 
             .catch((error) => errorCatch(error));
@@ -71,7 +75,12 @@ export default function Home() {
 
     useEffect(() => {
         axios
-            .get(`${API_URL}/study-groups`)
+            .get(`${API_URL}/study-groups`, {
+                headers: {
+                    "Content-Type": `application/json`,
+                    "ngrok-skip-browser-warning": "69420",
+                },
+            })
             .then((response) => {
                 setStudygroup(response.data);
             })

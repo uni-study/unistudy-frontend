@@ -209,7 +209,12 @@ export default function Applicant() {
 
     useEffect(() => {
         axios
-            .get(`${API_URL}/study-groups/${SG_ID}`)
+            .get(`${API_URL}/study-groups/${SG_ID}`, {
+                headers: {
+                    "Content-Type": `application/json`,
+                    "ngrok-skip-browser-warning": "69420",
+                },
+            })
             .then((response) => {
                 setStudyGroup(response.data);
             })
@@ -220,7 +225,12 @@ export default function Applicant() {
 
     useEffect(() => {
         axios
-            .get(`${API_URL}/studygroup-member-list/${SG_ID}`)
+            .get(`${API_URL}/studygroup-member-list/${SG_ID}`, {
+                headers: {
+                    "Content-Type": `application/json`,
+                    "ngrok-skip-browser-warning": "69420",
+                },
+            })
             .then((response) => {
                 setMember(response.data);
             })

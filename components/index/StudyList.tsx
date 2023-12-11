@@ -106,9 +106,16 @@ export default function StudyList({
     const [user, setUser] = useState<User[]>([]);
 
     useEffect(() => {
-        axios.get(`${API_URL}/users`).then((response) => {
-            setUser(response.data);
-        });
+        axios
+            .get(`${API_URL}/users`, {
+                headers: {
+                    "Content-Type": `application/json`,
+                    "ngrok-skip-browser-warning": "69420",
+                },
+            })
+            .then((response) => {
+                setUser(response.data);
+            });
     }, []);
 
     const getWriterName = (wid: number) => {
