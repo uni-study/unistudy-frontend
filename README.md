@@ -4,10 +4,10 @@ Frontend Repository for UNISTUDY studygroup recruiting platform.
 
 ### What is UNISTUDY?
 
-UNISTUDY is a study group recruitment and participation platform for UNIST students.
-This user-friendly platform empowers students to effortlessly create and join study groups, amplifying the learning experience and fostering seamless communication among peers.
-UNISTUDY is the gateway to a collaborative and enriched academic journey.
-We made this page because we experienced the difficulties of studying alone or not having someone to work with when we wanted to work on a project.
+UNISTUDY is a study group recruitment and participation platform for UNIST students. <br/>
+This user-friendly platform empowers students to effortlessly create and join study groups, amplifying the learning experience and fostering seamless communication among peers. <br/>
+UNISTUDY is the gateway to a collaborative and enriched academic journey. <br/>
+We made this page because we experienced the difficulties of studying alone or not having someone to work with when we wanted to work on a project. <br/>
 
 ## Technology
 
@@ -36,7 +36,7 @@ We made this page because we experienced the difficulties of studying alone or n
 
 ### Homepage
 
-The code for Homepage is in `pages/index.tsx` and `components/index/`.
+The code for Homepage is in `pages/index.tsx` and `components/index/`. <br/>
 It has some features
 
 -   See entire posts
@@ -48,7 +48,7 @@ It has some features
 
 ### Detail Post
 
-The code for seeing post is in `pages/detailPost` and `components/detailPost`.
+The code for seeing post is in `pages/detailPost` and `components/detailPost`. <br/>
 It has some features
 
 -   Set specific information of department / number of people / ...
@@ -57,7 +57,7 @@ It has some features
 
 ### Write a post
 
-The code for writing New post is in `pages/writePost` and `components/writePost`.
+The code for writing New post is in `pages/writePost` and `components/writePost`. <br/>
 It has some features
 
 -   See entire information of specific post
@@ -67,7 +67,7 @@ It has some features
 
 ### LogIn / SignUp
 
-The code for LogIn is in `pages/logIn` and the code for SignUp is in `pages/signUp`.
+The code for LogIn is in `pages/logIn` and the code for SignUp is in `pages/signUp`. <br/>
 It has some features
 
 -   Log in with email and password
@@ -75,7 +75,7 @@ It has some features
 
 ### My page
 
-The code for mypage is in `pages/myPage`.
+The code for mypage is in `pages/myPage`. <br/>
 It has some features
 
 -   See my username
