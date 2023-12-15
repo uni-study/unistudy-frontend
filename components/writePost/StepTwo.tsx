@@ -64,6 +64,7 @@ export default function StepTwo() {
 
     const date = new Date();
 
+    //To get the studygroup information which is set in last step, and set studygroup id
     if (curUserInfo) {
         axios
             .get(`${API_URL}/study-groups?leaderId=${USER_ID}`, {
@@ -99,8 +100,8 @@ export default function StepTwo() {
     let [userTwoData, setUserTwoData] = useState<StepTwoInterface>({
         writerId: curUserInfo?.id, //userId
         studygroupId: 0,
-        title: "", //제목
-        mainText: "", //본문
+        title: "", //title
+        mainText: "", //content
         postedAt: date.toISOString().substring(0, 19),
         updatedAt: date.toISOString().substring(0, 19),
         expiredAt: date.toISOString().substring(0, 19),
@@ -136,6 +137,7 @@ export default function StepTwo() {
         }));
     };
 
+    //To save the user's input data into Redux
     useEffect(() => {
         dispatch(setStepTwoData(userTwoData));
     }, [userTwoData, dispatch]);

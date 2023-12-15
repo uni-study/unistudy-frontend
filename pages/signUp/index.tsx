@@ -1,9 +1,8 @@
 import dynamic from "next/dynamic";
-
-import { API_URL } from "@/api/commonAPI";
 import axios from "axios";
-import { useRouter } from "next/router";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { API_URL } from "@/api/commonAPI";
 import styled from "styled-components";
 
 const MainContent = dynamic(import("@/components/layout/mainContent"));
@@ -99,6 +98,7 @@ export default function SignUp() {
     });
     const router = useRouter();
 
+    //Save the user's input data
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement>,
         field: keyof signUpAPIBody
@@ -110,6 +110,7 @@ export default function SignUp() {
         }));
     };
 
+    //Send the user's input data to the server
     const handleSignUp = async () => {
         try {
             const response = await axios.post(`${API_URL}/signup`, userData, {

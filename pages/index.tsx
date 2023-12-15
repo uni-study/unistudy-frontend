@@ -1,15 +1,14 @@
 import dynamic from "next/dynamic";
-
-const MainContent = dynamic(import("@/components/layout/mainContent"));
-const StudyList = dynamic(import("@/components/index/StudyList"));
-import { department, currentState } from "@/types/data";
-
-import styled from "styled-components";
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { department, currentState } from "@/types/data";
 import { Post, StudyGroup } from "@/api/interface/data.interface";
 import { API_URL } from "@/api/commonAPI";
 import { errorCatch } from "@/api/errorCatch";
+
+import styled from "styled-components";
+const MainContent = dynamic(import("@/components/layout/mainContent"));
+const StudyList = dynamic(import("@/components/index/StudyList"));
 
 const Outer = styled.div`
     display: flex;
@@ -57,6 +56,7 @@ export default function Home() {
     const [searchWord, setSearchWord] = useState<string>("");
     const [filteredPostList, setFilteredPostList] = useState<Post[]>(postList);
 
+    //get entire post
     useEffect(() => {
         axios
             .get(`${API_URL}/posts`, {
@@ -74,6 +74,7 @@ export default function Home() {
             .catch((error) => errorCatch(error));
     }, []);
 
+    //get entire study group
     useEffect(() => {
         axios
             .get(`${API_URL}/study-groups`, {
@@ -90,20 +91,24 @@ export default function Home() {
             .catch((error) => errorCatch(error));
     }, []);
 
+    //Filtering by department
     const handleDepartmentChange = (
         e: React.ChangeEvent<HTMLSelectElement>
     ) => {
         setSelectedDepartment(Number(e.target.value.substring(0, 2)));
     };
 
+    //Filtering by state
     const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedState(Number(e.target.value.substring(0, 2)));
     };
 
+    //Search
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchWord(e.target.value);
     };
 
+    //Search by enter
     const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key == "Enter") {
             if (postList) {

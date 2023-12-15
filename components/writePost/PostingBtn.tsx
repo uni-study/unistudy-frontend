@@ -1,7 +1,7 @@
+import axios from "axios";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-import axios from "axios";
 import { API_URL } from "@/api/commonAPI";
 import { useRouter } from "next/router";
 
@@ -44,15 +44,13 @@ export default function PostingBtn() {
             axios
                 .post(`${API_URL}/post`, postData)
                 .then((response) => {
-                    // 성공 시 필요한 작업 수행
+                    alert("New post is created!");
+                    router.push("/");
                 })
                 .catch((error) => {
                     console.error("Error posting data:", error);
-                    // 에러 처리
+                    alert("Please try again!");
                 });
-
-            alert("New post is created!");
-            router.push("/");
         } else {
             alert("Please fill out all the blanks!");
         }

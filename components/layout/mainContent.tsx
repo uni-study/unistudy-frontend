@@ -1,3 +1,4 @@
+//To set all the content style.
 import styled from "styled-components";
 import { ReactNode } from "react";
 

@@ -129,6 +129,7 @@ export default function Comment() {
 
     let [comment, setComment] = useState<CommentInterface[]>([]);
 
+    //get all the comments
     useEffect(() => {
         axios
             .get(`${API_URL}/comments`)
@@ -152,7 +153,7 @@ export default function Comment() {
         axios
             .delete(`${API_URL}/comment/${cid}`)
             .then((response) => {
-                alert("댓글이 삭제되었습니다.");
+                alert("Successfully delete the comment.");
                 router.push(`/detailPost/${router.query.pid}`);
             })
             .catch((error) => {
@@ -160,6 +161,7 @@ export default function Comment() {
             });
     };
 
+    //Add comment
     const handleClick = () => {
         axios
             .post(`${API_URL}/comment`, newComment)

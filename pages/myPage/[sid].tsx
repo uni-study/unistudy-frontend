@@ -1,9 +1,10 @@
 import dynamic from "next/dynamic";
+import axios from "axios";
+
 import { API_URL } from "@/api/commonAPI";
 import { Member, StudyGroup } from "@/api/interface/data.interface";
 import { RootState } from "@/store";
 import { currentState } from "@/types/data";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -207,6 +208,7 @@ export default function Applicant() {
     const [member, setMember] = useState<Member[]>([]);
     const [participantName, setParticipantName] = useState<string>("");
 
+    //get specific studygroup
     useEffect(() => {
         axios
             .get(`${API_URL}/study-groups/${SG_ID}`, {
@@ -224,6 +226,7 @@ export default function Applicant() {
             });
     }, []);
 
+    //get specific studygroup's member
     useEffect(() => {
         axios
             .get(`${API_URL}/studygroup-member-list/${SG_ID}`, {
@@ -241,6 +244,7 @@ export default function Applicant() {
             });
     }, []);
 
+    //If click Accept button, change accepted value to true
     const handleAccept = (participant: Member) => {
         axios
             .put(`${API_URL}/studygroup-member/${participant.id}`, {
@@ -265,24 +269,24 @@ export default function Applicant() {
         TSdeadline = "1900-01-01";
     }
 
+    //Send Put request to change currentState value to server
     const handleModify = () => {
-        // 서버로 변경된 currentState 값을 보내는 PUT 요청을 보내는 코드
         axios
             .put(`${API_URL}/study-groups/${SG_ID}`, {
                 ...studyGroup,
                 currentState: Number(newState.substring(0, 1)),
-                recruitmentDeadline: TSdeadline, // 수정된 currentState 값 전송
+                recruitmentDeadline: TSdeadline,
             })
             .then((response) => {
                 alert("Recruiting Statement is changed successfully!");
                 router.push("/myPage");
-                // 필요에 따라 어떤 작업을 수행하세요 (예: 성공 메시지 출력 등)
             })
             .catch((error) => {
                 console.error("Error updating study group:");
             });
     };
 
+    //Use to find specific user's name
     const findMemberName = async (uid: number) => {
         try {
             const response = await axios.get(`${API_URL}/user/${uid}`, {
@@ -381,7 +385,7 @@ export default function Applicant() {
                             </CurrentStateTitle>
                             <CurrentStateSelect
                                 placeholder="Recruiting"
-                                value={newState} // currentState 값과 useState에 의해 연결
+                                value={newState}
                                 onChange={(e) => setNewState(e.target.value)}
                             >
                                 {currentState.map((item, i) => {

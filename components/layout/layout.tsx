@@ -1,3 +1,4 @@
+// Layout component for the website
 import dynamic from "next/dynamic";
 import { ReactNode } from "react";
 import styled from "styled-components";
