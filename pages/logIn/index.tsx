@@ -1,12 +1,13 @@
 import dynamic from "next/dynamic";
+import axios from "axios";
 
 import { API_URL } from "@/api/commonAPI";
-import axios from "axios";
 import { useState } from "react";
-import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { setIsLoggedIn, setUserInfo } from "@/store/modules/user";
+
+import styled from "styled-components";
 
 const MainContent = dynamic(import("@/components/layout/mainContent"));
 
@@ -84,7 +85,7 @@ export default function LogIn() {
 
     const handleLogIn = async () => {
         try {
-            // POST /login API 호출
+            // POST /login API
             const response = await axios.post(`${API_URL}/login`, {
                 email: email,
                 pw: password,
@@ -95,7 +96,7 @@ export default function LogIn() {
                 router.push("/", undefined, { shallow: true });
             }
         } catch (error) {
-            console.error("로그인 에러:", error);
+            console.error("Login Error:", error);
         }
     };
 

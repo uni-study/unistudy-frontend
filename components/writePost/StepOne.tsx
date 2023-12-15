@@ -104,13 +104,13 @@ export default function StepOne() {
         leaderId: curUserInfo?.id, //userId
         name: "",
         description: "test",
-        department: 0, //유저인풋
-        numOfPeople: 0, //유저인풋
-        studyMethod: 0, //유저인풋
-        studyPeriod: 0, //유저인풋
-        recruitmentDeadline: "", //유저인풋
-        currentState: 0, //유저인풋
-        contact: "", //유저인풋
+        department: 0, //User input
+        numOfPeople: 0, //User input
+        studyMethod: 0, //User input
+        studyPeriod: 0, //User input
+        recruitmentDeadline: "", //User input
+        currentState: 0, //User input
+        contact: "", //User input
     });
 
     const handleSelectChange = (
@@ -152,6 +152,8 @@ export default function StepOne() {
         }
     };
 
+    //When click next button, send Post request for studygroup and move to stepTwo page
+    //And save it into Redux
     const handlerOnClick = () => {
         axios
             .post(`${API_URL}/study-group`, userOneData)

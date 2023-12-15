@@ -48,6 +48,7 @@ export default function Information(props: PROPS_TYPE) {
     const STUDY_GROUP_ID = props.studyGroupId;
     let [currentSG, setCurrentSG] = useState<StudyGroup>();
 
+    //Show all the details of studygroup which set in Stepone
     useEffect(() => {
         axios
             .get(`${API_URL}/study-groups/${STUDY_GROUP_ID}`)

@@ -1,13 +1,14 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import type { Post, StudyGroup } from "@/api/interface/data.interface";
 import axios from "axios";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+
+import type { Post, StudyGroup } from "@/api/interface/data.interface";
 import { RootState } from "@/store";
 import { useSelector } from "react-redux";
 import { API_URL } from "@/api/commonAPI";
-import { useRouter } from "next/router";
+import styled from "styled-components";
 
 const LineComponent = dynamic(import("@/components/common/LineComponent"));
 const MainContent = dynamic(import("@/components/layout/mainContent"));
@@ -62,6 +63,7 @@ export default function MyPage() {
     const [userStudyGroups, setUserStudyGroups] = useState<StudyGroup[]>();
     const router = useRouter();
 
+    //get post of current user
     useEffect(() => {
         axios
             .get(`${API_URL}/posts?writerId=${currentUID}`, {
@@ -79,6 +81,7 @@ export default function MyPage() {
             });
     }, []);
 
+    //get studygroup of current user
     useEffect(() => {
         axios
             .get(`${API_URL}/study-groups?leaderId=${currentUID}`, {
@@ -96,10 +99,12 @@ export default function MyPage() {
             });
     }, []);
 
+    //When click the title of studygroup, move to studygroup page
     const handleMoveToSG = (sgid: number) => {
         router.push(`/myPage/${sgid}`);
     };
 
+    //When click the title of post, move to post page
     const handleMoveToPost = (pid: number) => {
         router.push(`/detailPost/${pid}`);
     };

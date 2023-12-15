@@ -5,7 +5,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-import { Member, Post, StudyGroup } from "@/api/interface/data.interface";
+import { Post } from "@/api/interface/data.interface";
 
 const Outer = styled.div`
     display: flex;
@@ -30,6 +30,8 @@ interface MemberInterface {
     accepted: boolean;
 }
 
+//For writer, delete button
+//For others, participate button
 export default function PorDBtn() {
     const today = new Date();
     const dateString =
@@ -68,7 +70,7 @@ export default function PorDBtn() {
         axios
             .delete(`${API_URL}/post/${currentPID}`)
             .then((response) => {
-                alert("게시글이 삭제되었습니다.");
+                alert("Succesfully delete.");
                 router.push("/");
             })
             .catch((error) => {

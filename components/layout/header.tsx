@@ -34,13 +34,13 @@ export default function Header() {
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-        // 로컬 스토리지에서 토큰 제거
+        // Remove token from localStorage
         localStorage.removeItem("token");
 
-        // Redux 스토어에서 로그아웃 액션 디스패치
+        //Logout action dispatch from Redux store
         dispatch(logoutUser());
 
-        // 로그아웃 후 원하는 경로로 이동 (예: 로그인 페이지)
+        //Move to Login page after logout
         router.push("/logIn");
     };
 

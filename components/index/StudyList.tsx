@@ -105,6 +105,7 @@ export default function StudyList({
     };
     const [user, setUser] = useState<User[]>([]);
 
+    //get user data
     useEffect(() => {
         axios
             .get(`${API_URL}/users`, {
@@ -130,10 +131,9 @@ export default function StudyList({
         }
     };
 
-    //게시글 띄울 때 필요한 정보
-    //postlist : title
-    //studyGroup : department, studyMethod, recuritmentDeadline, currentstate, name
-    //두개 연결: studygroupd의 id와 post의 studyGroupId가 같은 것
+    //Show post list
+    //If props contains filtered post and studygroup, it will show filtered post list
+    //If not, it will show all post list
     if (postList && studyGroup) {
         return (
             <>

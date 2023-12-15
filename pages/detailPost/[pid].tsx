@@ -1,10 +1,11 @@
 import dynamic from "next/dynamic";
+import axios from "axios";
+
 import { useRouter } from "next/router";
-import styled from "styled-components";
 import { Post, StudyGroup, User } from "@/api/interface/data.interface";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { API_URL } from "@/api/commonAPI";
+import styled from "styled-components";
 
 const MainContent = dynamic(import("@/components/layout/mainContent"));
 const Title = dynamic(import("@/components/detailPost/Title"));
@@ -26,10 +27,6 @@ const Line = styled.hr`
     width: 100%;
     color: #c1c1c1;
 `;
-
-//detailPost에 담기는 내용
-// studygroup 내용
-//post의 타이틀, 메인텍스트, postedAt
 
 export default function DetailPost() {
     const router = useRouter();
