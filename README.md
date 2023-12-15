@@ -84,10 +84,6 @@ It has some features
     -   Change current recruiting status
 -   Check and move to my post
 
-## Contributors
-
-20201243 Hayeong Lee
-
 ## Learn and Difficulties
 
 It is the first time developing an entire frontend of one website using Next.js and Redux. <br/>
