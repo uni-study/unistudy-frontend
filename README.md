@@ -90,8 +90,9 @@ It has some features
 
 ## Learn and Difficulties
 
-It is the first time developing an entire frontend of one website using Next.js and Redux.
-I have learned so many things. I could understand how global data management is working using Redux. Also, I could learn how the server and frontend communicate using API and axios.
-However, It was also very hard time to develop all the features. Specifically, I could know what is API and how it works with server, but I could not use it well with totally understanding. I think I need to study more about API and how to use it efficiently.
-Also, We want to deploy the website with all functions working well, but it was very hard. We could run our website very well in local, but in the deploy version, we could only upload our website with login, signup, and post writing functions.
+It is the first time developing an entire frontend of one website using Next.js and Redux. <br/>
+I have learned so many things. I could understand how global data management is working using Redux. Also, I could learn how the server and frontend communicate using API and axios.<br/>
+However, It was also very hard time to develop all the features.<br/>
+Specifically, I could know what is API and how it works with server, but I could not use it well with totally understanding. I think I need to study more about API and how to use it efficiently.<br/>
+Also, We want to deploy the website with all functions working well, but it was very hard. We could run our website very well in local, but in the deploy version, we could only upload our website with login, signup, and post writing functions.<br/>
 Making one total website is very beneficial time, but it was very difficult.
