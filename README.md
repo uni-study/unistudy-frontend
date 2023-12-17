@@ -1,6 +1,6 @@
 # UNISTUDY Frontend
 
-Frontend Repository for UNISTUDY studygroup recruiting platform.
+- Backend Repository <a href="https://github.com/uni-study/unistudy-back" target="_blank"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white"/></a>
 
 ### What is UNISTUDY?
 
